@@ -33,22 +33,28 @@ const categories = [
 
 const heroSlides = [
   {
-    image: "/images/starlink-sunset.jfif",
-    kicker: "Connectivity · Security · Infrastructure",
-    title: ["Connecting Zambia.", "Securing what matters."],
-    text: "Terci Communications designs, supplies and supports the technology that keeps organisations connected, protected and productive.",
+    image: "/images/hero-starlink-installation.webp",
+    kicker: "Starlink installation · Across Zambia",
+    title: ["Reliable internet.", "Professionally installed."],
+    text: "Secure mounting, careful cable routing, activation and practical Wi-Fi support for homes, offices and remote sites.",
   },
   {
-    image: "/images/cctv-team-install.jpeg",
-    kicker: "Integrated security solutions",
-    title: ["Visibility where", "your operation needs it."],
-    text: "From CCTV and access control to alarms and perimeter protection, we build practical security systems around real operational risks.",
+    image: "/images/hero-fibre-installation.webp",
+    kicker: "Fibre optic infrastructure",
+    title: ["Built in the field.", "Tested for uptime."],
+    text: "Fibre deployment, fusion splicing, termination and OTDR testing delivered by one accountable technical team.",
   },
   {
-    image: "/images/fibre-route-field-work.webp",
-    kicker: "Business-critical infrastructure",
-    title: ["Infrastructure engineered", "for dependable uptime."],
-    text: "Fibre, structured cabling, business Wi-Fi and resilient power—planned, installed and supported by one accountable technical team.",
+    image: "/images/hero-cctv-installation.webp",
+    kicker: "CCTV installation & security",
+    title: ["Coverage planned.", "Protection installed."],
+    text: "Professional camera positioning, secure mounting and dependable surveillance systems designed around each site.",
+  },
+  {
+    image: "/images/hero-cctv-camera.webp",
+    kicker: "Professional surveillance",
+    title: ["Clear visibility.", "Where it matters."],
+    text: "CCTV solutions for businesses, institutions, industrial facilities and homes—with ongoing technical support.",
   },
 ];
 
