@@ -1,6 +1,8 @@
-# Terci Communications website
+# Terci Communications corporate website
 
-Catalyst Slate front-end for Terci Communications Limited.
+Catalyst Slate front-end for Terci Communications Limited. The public site uses
+a corporate, image-led layout with solution, project, coverage and industry
+sections, while retaining the live catalogue and protected product dashboard.
 
 ## Catalyst Slate settings
 

@@ -14,34 +14,74 @@ const services = [
 ];
 
 const projects = [
-  ["/images/starlink-sunset.jfif", "Starlink", "Business connectivity installation", "wide"],
-  ["/images/cctv-install.jpeg", "Security", "Hikvision CCTV deployment", ""],
-  ["/images/wireless-link.jpeg", "Networking", "Point-to-point wireless link", ""],
-  ["/images/cctv-team-install.jpeg", "Security", "Industrial CCTV installation", ""],
-  ["/images/cctv-industrial-camera.jpeg", "CCTV", "Protected camera mounting", ""],
-  ["/images/starlink-install.jpeg", "Starlink", "Custom wall-mounted installation", "wide"],
+  ["/images/fibre-route-field-work.webp", "Fibre deployment", "Field cable preparation and route work", "wide"],
+  ["/images/telecommunications-tower-zambia.webp", "Infrastructure", "Telecommunications tower route", ""],
+  ["/images/fibre-fusion-splicer.webp", "Fibre splicing", "Fusion splicing equipment", ""],
+  ["/images/onsite-fibre-cabinet-work.webp", "Site integration", "Outdoor cabinet fibre installation", ""],
+  ["/images/fibre-cable-preparation.webp", "Field works", "Fibre cable and hardware preparation", ""],
+  ["/images/fibre-rack-termination.webp", "Commissioning", "Rack termination and fibre patching", "wide"],
 ];
 
 const categories = [
   ["Starlink & accessories", "Satellite internet equipment, mounting accessories and professional installation.", "/images/starlink-hero.jpeg"],
   ["CCTV & security", "Cameras, recorders, access control, alarms and perimeter protection equipment.", "/images/cctv-industrial-camera.jpeg"],
   ["Networking & Wi-Fi", "Business routers, access points, switches and wireless-link equipment.", "/images/outdoor-ap.jpeg"],
-  ["Fibre tools & materials", "Fibre cable, accessories, termination materials and installation tools.", "/images/fibre-cabinet.JPG"],
+  ["Fibre tools & materials", "Fibre cable, accessories, termination materials and installation tools.", "/images/fibre-rack-termination.webp"],
   ["Electrical & solar", "Reliable power distribution and backup solutions for ICT equipment.", "/images/electrical-board.jpeg"],
   ["Business technology", "Practical ICT equipment selected for Zambian homes, offices and field sites.", "/images/client-handover.jpeg"],
 ];
 
+const heroSlides = [
+  {
+    image: "/images/starlink-sunset.jfif",
+    kicker: "Connectivity · Security · Infrastructure",
+    title: ["Connecting Zambia.", "Securing what matters."],
+    text: "Terci Communications designs, supplies and supports the technology that keeps organisations connected, protected and productive.",
+  },
+  {
+    image: "/images/cctv-team-install.jpeg",
+    kicker: "Integrated security solutions",
+    title: ["Visibility where", "your operation needs it."],
+    text: "From CCTV and access control to alarms and perimeter protection, we build practical security systems around real operational risks.",
+  },
+  {
+    image: "/images/fibre-route-field-work.webp",
+    kicker: "Business-critical infrastructure",
+    title: ["Infrastructure engineered", "for dependable uptime."],
+    text: "Fibre, structured cabling, business Wi-Fi and resilient power—planned, installed and supported by one accountable technical team.",
+  },
+];
+
+const serviceImages = {
+  starlink: "/images/starlink-hero.jpeg",
+  security: "/images/cctv-industrial-camera.jpeg",
+  fibre: "/images/fibre-rack-termination.webp",
+  networking: "/images/outdoor-ap.jpeg",
+  voice: "/images/client-handover.jpeg",
+  power: "/images/electrical-board.jpeg",
+};
+
+const industries = ["Mining & industrial", "Financial services", "Retail & hospitality", "Education", "Healthcare", "Homes & estates"];
+
 function Header({ active = "home" }) {
-  return <header className="site-header">
-    <a className="brand" href="/" aria-label="Terci Communications home"><img src="/images/terci-mark.png" alt=""/><span><strong>TERCI</strong><small>COMMUNICATIONS LIMITED</small></span></a>
-    <nav className="main-nav" aria-label="Main navigation"><a href="/" aria-current={active === "home" ? "page" : undefined}>Home</a><a href="/#services">Services</a><a href="/fiber" aria-current={active === "fiber" ? "page" : undefined}>Fibre</a><a href="/shop" aria-current={active === "shop" ? "page" : undefined}>Products</a><a href="/#work">Projects</a><a href="/#coverage">Coverage</a><a href="/#contact">Contact</a></nav>
-    <details className="mobile-nav"><summary aria-label="Open navigation">Menu</summary><div><a href="/">Home</a><a href="/#services">Services</a><a href="/fiber">Fibre</a><a href="/shop">Products</a><a href="/#work">Projects</a><a href="/#coverage">Coverage</a><a href="/#contact">Contact</a></div></details>
-    <a className="header-cta" href={`${WA}?text=Hello%20Terci%20Communications%2C%20I%20would%20like%20a%20quotation.`} target="_blank" rel="noreferrer">Get a quotation</a>
-  </header>;
+  return <>
+    <div className="topline"><div><a href="tel:+260972888575">+260 972 888 575</a><a href="mailto:info@terci.net">info@terci.net</a></div><div><span>Kitwe, Zambia</span><span>Nationwide project delivery</span></div></div>
+    <header className="site-header corporate-header">
+      <a className="brand" href="/" aria-label="Terci Communications home"><img src="/images/terci-mark.png" alt=""/><span><strong>TERCI</strong><small>COMMUNICATIONS LIMITED</small></span></a>
+      <nav className="main-nav corporate-nav" aria-label="Main navigation">
+        <a href="/" aria-current={active === "home" ? "page" : undefined}>Home</a>
+        <div className="nav-item"><a href="/#about">About <span>⌄</span></a><div className="nav-panel about-panel"><a href="/#about"><b>Who we are</b><small>A Zambian technology partner</small></a><a href="/#approach"><b>Our approach</b><small>Plan · Deliver · Support</small></a><a href="/#coverage"><b>Where we work</b><small>Copperbelt hub, national reach</small></a></div></div>
+        <div className="nav-item"><a href="/#services">Solutions <span>⌄</span></a><div className="nav-panel solutions-panel"><a href="/#starlink"><b>Starlink &amp; Internet</b><small>Reliable connectivity</small></a><a href="/#security"><b>CCTV &amp; Security</b><small>Integrated protection</small></a><a href="/fiber"><b>Fibre Infrastructure</b><small>Design, splice and test</small></a><a href="/#networking"><b>Networks &amp; Wi-Fi</b><small>Business-ready coverage</small></a><a href="/#voice"><b>Voice &amp; Collaboration</b><small>PBX and enterprise voice</small></a><a href="/#power"><b>Electrical &amp; Solar</b><small>Resilient ICT power</small></a></div></div>
+        <a href="/shop" aria-current={active === "shop" ? "page" : undefined}>Products</a><a href="/#work">Projects</a><a href="/#coverage">Coverage</a><a href="/#contact">Contact</a>
+      </nav>
+      <details className="mobile-nav"><summary aria-label="Open navigation">Menu</summary><div><a href="/">Home</a><a href="/#about">About</a><a href="/#services">Solutions</a><a href="/fiber">Fibre</a><a href="/shop">Products</a><a href="/#work">Projects</a><a href="/#coverage">Coverage</a><a href="/#contact">Contact</a></div></details>
+      <a className="header-cta" href={`${WA}?text=Hello%20Terci%20Communications%2C%20I%20would%20like%20a%20quotation.`} target="_blank" rel="noreferrer">Request a quotation <span>↗</span></a>
+    </header>
+  </>;
 }
 
 function Footer() {
-  return <><footer><a className="brand footer-brand" href="/"><img src="/images/terci-mark.png" alt=""/><span><strong>TERCI</strong><small>COMMUNICATIONS LIMITED</small></span></a><p>Integrated Security &amp; Connectivity Solutions</p><div><a href="mailto:info@terci.net">info@terci.net</a><a href="tel:+260972888575">+260 972 888 575</a></div><small>© 2026 Terci Communications Limited. Zambia.</small></footer><a className="floating-wa" href={WA} target="_blank" rel="noreferrer" aria-label="Contact Terci on WhatsApp">WA</a></>;
+  return <><footer className="corporate-footer"><div className="footer-intro"><a className="brand footer-brand" href="/"><img src="/images/terci-mark.png" alt=""/><span><strong>TERCI</strong><small>COMMUNICATIONS LIMITED</small></span></a><p>Integrated security, connectivity and ICT infrastructure for organisations across Zambia.</p></div><div className="footer-column"><b>Company</b><a href="/#about">About Terci</a><a href="/#work">Projects</a><a href="/#coverage">Coverage</a><a href="/#contact">Contact</a></div><div className="footer-column"><b>Solutions</b><a href="/#starlink">Starlink &amp; Internet</a><a href="/#security">CCTV &amp; Security</a><a href="/fiber">Fibre Infrastructure</a><a href="/#networking">Networks &amp; Wi-Fi</a></div><div className="footer-column footer-contact"><b>Talk to our team</b><a href="mailto:info@terci.net">info@terci.net</a><a href="tel:+260972888575">+260 972 888 575</a><span>Kitwe, Zambia</span></div><div className="footer-bottom"><small>© 2026 Terci Communications Limited. All rights reserved.</small><span>Integrated Security &amp; Connectivity Solutions</span></div></footer><a className="floating-wa" href={WA} target="_blank" rel="noreferrer" aria-label="Contact Terci on WhatsApp">WA</a></>;
 }
 
 function CategoryProducts({ compact = false }) {
@@ -53,7 +93,7 @@ const categoryFallback = (category = "") => {
   const value = category.toLowerCase();
   if (value.includes("starlink") || value.includes("satellite")) return "/images/starlink-hero.jpeg";
   if (value.includes("cctv") || value.includes("security")) return "/images/cctv-industrial-camera.jpeg";
-  if (value.includes("fibre") || value.includes("fiber")) return "/images/fibre-cabinet.JPG";
+  if (value.includes("fibre") || value.includes("fiber")) return "/images/fibre-rack-termination.webp";
   if (value.includes("electric") || value.includes("solar")) return "/images/electrical-board.jpeg";
   if (value.includes("network") || value.includes("wi-fi") || value.includes("wifi")) return "/images/outdoor-ap.jpeg";
   return "/images/client-handover.jpeg";
@@ -97,15 +137,35 @@ function PublicCatalogue() {
 }
 
 function Home() {
-  return <main><Header/>
-    <section className="hero" id="home"><div className="hero-grid" aria-hidden="true"/><div className="hero-copy"><div className="availability"><span/> Available for projects across Zambia</div><p className="eyebrow">Security systems · Connectivity · ICT infrastructure</p><h1>Technology that keeps your <em>business moving.</em></h1><p className="hero-text">Terci Communications delivers dependable connectivity, security and network infrastructure across Zambia—from first survey to installation and ongoing support.</p><div className="hero-actions"><a className="btn primary" href={`${WA}?text=Hello%20Terci%20Communications%2C%20I%20need%20help%20with...`} target="_blank" rel="noreferrer">Talk to our team <span>↗</span></a><a className="btn secondary" href="#work">See our work <span>↓</span></a></div><div className="trust-row"><span><b>20+</b> Starlink installations</span><span><b>Nationwide</b> field capability</span><span><b>End-to-end</b> technical support</span></div></div><div className="hero-visual"><div className="photo-frame"><img src="/images/starlink-hero.jpeg" alt="A completed Starlink installation by Terci Communications"/></div><div className="orbit orbit-one"/><div className="orbit orbit-two"/><div className="signal-card"><span className="pulse"/> <b>Connected.</b><small>Built for reliable service.</small></div><div className="experience-card"><b>12+</b><span>years of<br/>technical experience</span></div></div></section>
-    <section className="marquee" aria-label="Terci services"><div><b>STARLINK INSTALLATION</b><i>✦</i><b>CCTV &amp; SECURITY</b><i>✦</i><b>FIBRE NETWORKS</b><i>✦</i><b>BUSINESS WI-FI</b><i>✦</i><b>ACCESS CONTROL</b><i>✦</i><b>TECHNICAL SUPPORT</b><i>✦</i></div></section>
-    <section className="section services" id="services"><div className="section-heading"><div><p className="eyebrow">What we deliver</p><h2>One partner. <span className="outline-text">Complete</span> ICT solutions.</h2></div><p>Practical systems designed around your site, your risks and your growth plans—not a one-size-fits-all package.</p></div><div className="service-grid">{services.map(([n,title,text,id])=><article className="service-card" id={id} key={title}><span>{n}</span><h3>{title}</h3><p>{text}</p><a href={id === "fibre" ? "/fiber" : `${WA}?text=${encodeURIComponent(`Hello Terci, I am interested in ${title}.`)}`} target={id === "fibre" ? undefined : "_blank"} rel="noreferrer">{id === "fibre" ? "Explore fibre" : "Enquire"} <b>→</b></a></article>)}</div></section>
-    <section className="coverage-section" id="coverage"><div><p className="eyebrow">Nationwide project delivery</p><h2>Built on the Copperbelt.<br/><span>Ready across Zambia.</span></h2><p>Our Copperbelt hub gives customers fast local response, while our field teams deploy connectivity, security, fibre and ICT infrastructure for projects throughout Zambia.</p><div className="coverage-note"><b>Rapid response</b><span>Kitwe, Ndola and the wider Copperbelt</span></div></div><div className="zambia-coverage"><div className="coverage-hub"><small>OPERATIONAL HUB</small><b>Copperbelt</b><span>National field deployment</span></div><div className="province-grid">{["Copperbelt","Lusaka","Central","North-Western","Northern","Luapula","Muchinga","Eastern","Southern","Western"].map(x=><span key={x}>{x}</span>)}</div></div></section>
-    <section className="section work" id="work"><div className="section-heading light"><div><p className="eyebrow">Proof in the field</p><h2>Real installations.<br/><span className="red-script">Real capability.</span></h2></div><p>Our portfolio shows the workmanship behind the promise—from clean cable routes and secure mounts to commissioned, working systems.</p></div><div className="project-grid">{projects.map(([image,label,title,cls])=><figure className={cls} key={title}><img src={image} alt={title} loading="lazy"/><figcaption><span>{label}</span><b>{title}</b></figcaption></figure>)}</div></section>
-    <section className="home-products" id="products"><div className="home-products-heading"><div><p className="eyebrow">Equipment supplied by Terci</p><h2>Products you can buy.<br/><span>Expert support included.</span></h2></div><div><p>Selected Starlink, CCTV, networking, fibre and ICT products—available with professional installation and nationwide support.</p><a href="/shop">View all products <span>→</span></a></div></div><FeaturedProducts/></section>
-    <section className="section why" id="about"><div className="why-image"><img src="/images/outdoor-ap.jpeg" alt="Outdoor networking equipment installed by Terci Communications"/><span>Zambian-owned.<br/>Built for local realities.</span></div><div className="why-copy"><p className="eyebrow">Why Terci</p><h2>Technical depth.<br/>Business understanding.</h2><p>We combine hands-on field experience with an enterprise approach to planning, safety and support. That means solutions that work on installation day—and remain supportable as your organisation grows.</p><ul><li><span>✓</span><div><b>Qualified, hands-on technicians</b><small>Experienced across connectivity, networking and security systems.</small></div></li><li><span>✓</span><div><b>Clear scopes and honest recommendations</b><small>We design for the requirement, not simply the biggest invoice.</small></div></li><li><span>✓</span><div><b>Support beyond installation</b><small>Maintenance, troubleshooting and expansion when you need it.</small></div></li></ul></div></section>
-    <section className="cta-section" id="contact"><div className="cta-ring ring-a"/><div className="cta-ring ring-b"/><p className="eyebrow">Start your project</p><h2>Let’s build a solution<br/>that works for you.</h2><p>Tell us what you need. We’ll help you define the right scope and provide a clear quotation.</p><div className="cta-actions"><a className="btn white" href={`${WA}?text=Hello%20Terci%20Communications%2C%20I%20would%20like%20to%20discuss%20a%20project.`} target="_blank" rel="noreferrer">Chat on WhatsApp <span>↗</span></a><a href="tel:+260972888575">Call +260 972 888 575</a></div></section><Footer/>
+  const [slide, setSlide] = useState(0);
+  useEffect(() => {
+    const timer = window.setInterval(() => setSlide((current) => (current + 1) % heroSlides.length), 7000);
+    return () => window.clearInterval(timer);
+  }, []);
+  const current = heroSlides[slide];
+  return <main className="home-corporate"><Header/>
+    <section className="corp-hero" id="home">
+      <div className="corp-hero-images" aria-hidden="true">{heroSlides.map((item, index) => <img className={index === slide ? "active" : ""} src={item.image} alt="" key={item.image}/>)}</div><div className="corp-hero-shade"/>
+      <div className="corp-hero-content"><p className="eyebrow">{current.kicker}</p><h1>{current.title[0]}<span>{current.title[1]}</span></h1><p>{current.text}</p><div className="hero-actions"><a className="btn primary" href={`${WA}?text=Hello%20Terci%20Communications%2C%20I%20would%20like%20to%20discuss%20a%20project.`} target="_blank" rel="noreferrer">Talk to our team <span>↗</span></a><a className="btn glass" href="#services">Explore our solutions <span>↓</span></a></div></div>
+      <div className="slide-controls" aria-label="Hero slides">{heroSlides.map((item, index) => <button className={index === slide ? "active" : ""} onClick={() => setSlide(index)} aria-label={`Show slide ${index + 1}`} key={item.image}><span>0{index + 1}</span></button>)}</div>
+      <div className="hero-proof"><article><b>12+</b><span>Years of technical experience</span></article><article><b>20+</b><span>Starlink installations delivered</span></article><article><b>10</b><span>Provinces within our field reach</span></article><article><b>End-to-end</b><span>Planning, supply and support</span></article></div>
+    </section>
+
+    <section className="corp-intro" id="about"><div className="section-marker"><span>01</span><b>About Terci</b></div><div className="corp-intro-main"><p className="eyebrow">A Zambian technology partner</p><h2>We build the systems that modern organisations depend on.</h2><div className="intro-columns"><p>Terci Communications Limited delivers integrated connectivity, security and ICT infrastructure for businesses, institutions, industrial operations and homes across Zambia.</p><p>Our work combines hands-on field capability with structured planning, clear documentation and ongoing technical support—from the first site survey to final handover.</p></div><a className="text-link" href="#approach">Discover how we work <span>→</span></a></div></section>
+
+    <section className="corp-solutions" id="services"><div className="corp-section-head"><div><p className="eyebrow">Our solutions</p><h2>One accountable partner.<br/>Six connected capabilities.</h2></div><p>Practical technology designed around your site, operational risks and growth plans—not a one-size-fits-all package.</p></div><div className="solution-grid">{services.map(([n,title,text,id])=><article className="solution-card" id={id} key={title}><div className="solution-image"><img src={serviceImages[id]} alt="" loading="lazy"/><span>{n}</span></div><div><h3>{title}</h3><p>{text}</p><a href={id === "fibre" ? "/fiber" : `${WA}?text=${encodeURIComponent(`Hello Terci, I am interested in ${title}.`)}`} target={id === "fibre" ? undefined : "_blank"} rel="noreferrer">{id === "fibre" ? "Explore capability" : "Discuss this solution"} <span>↗</span></a></div></article>)}</div></section>
+
+    <section className="corp-approach" id="approach"><div className="approach-copy"><p className="eyebrow">How we deliver</p><h2>From requirement<br/>to reliable operation.</h2><p>Our role does not end when the equipment is mounted. We scope correctly, install professionally, test thoroughly and remain available when the system needs support or expansion.</p><a className="btn primary" href={`${WA}?text=Hello%20Terci%2C%20please%20help%20me%20scope%20a%20technology%20project.`} target="_blank" rel="noreferrer">Start a conversation <span>↗</span></a></div><div className="approach-steps">{[["01","Assess","Site survey, risks and requirements"],["02","Design","Clear scope and suitable technology"],["03","Deliver","Professional installation and testing"],["04","Support","Handover, maintenance and expansion"]].map(([n,t,d])=><article key={n}><span>{n}</span><div><b>{t}</b><small>{d}</small></div></article>)}</div></section>
+
+    <section className="corp-projects" id="work"><div className="corp-section-head light"><div><p className="eyebrow">Projects &amp; field capability</p><h2>Real work.<br/>Visible standards.</h2></div><p>Our portfolio demonstrates the workmanship behind the promise—from secure mounting and clean cable routes to commissioned, working systems.</p></div><div className="project-grid">{projects.map(([image,label,title,cls])=><figure className={cls} key={title}><img src={image} alt={title} loading="lazy"/><figcaption><span>{label}</span><b>{title}</b></figcaption></figure>)}</div><div className="projects-note"><span>Field installations completed across Zambia</span><a href={`${WA}?text=Hello%20Terci%2C%20I%20would%20like%20to%20see%20more%20project%20examples.`} target="_blank" rel="noreferrer">Request our company profile <b>→</b></a></div></section>
+
+    <section className="home-products corporate-products" id="products"><div className="home-products-heading"><div><p className="eyebrow">Equipment supplied by Terci</p><h2>Professional products.<br/><span>Technical support included.</span></h2></div><div><p>Selected Starlink, CCTV, networking, fibre and ICT products—available with professional installation and nationwide support.</p><a href="/shop">View the complete catalogue <span>→</span></a></div></div><FeaturedProducts/></section>
+
+    <section className="corp-coverage" id="coverage"><div className="coverage-photo"><img src="/images/client-handover.jpeg" alt="Terci project handover in Zambia" loading="lazy"/><div><small>OPERATIONAL BASE</small><b>Copperbelt</b><span>National field deployment</span></div></div><div className="coverage-content"><p className="eyebrow">Nationwide project delivery</p><h2>Rooted on the Copperbelt.<br/>Ready across Zambia.</h2><p>Our Copperbelt hub supports fast local response while our field capability extends to projects throughout all ten provinces.</p><div className="province-list">{["Copperbelt","Lusaka","Central","North-Western","Northern","Luapula","Muchinga","Eastern","Southern","Western"].map(x=><span key={x}>{x}</span>)}</div></div></section>
+
+    <section className="corp-industries"><div><p className="eyebrow">Industries we support</p><h2>Technology shaped around the environment it serves.</h2></div><div className="industry-grid">{industries.map((industry,index)=><span key={industry}><b>0{index + 1}</b>{industry}</span>)}</div></section>
+
+    <section className="corp-contact" id="contact"><div><p className="eyebrow">Start your project</p><h2>Let’s build infrastructure<br/>your organisation can rely on.</h2></div><div><p>Tell us what you need. We’ll help define the right scope and provide a clear quotation.</p><a className="btn white" href={`${WA}?text=Hello%20Terci%20Communications%2C%20I%20would%20like%20to%20discuss%20a%20project.`} target="_blank" rel="noreferrer">Chat on WhatsApp <span>↗</span></a><a href="mailto:info@terci.net">info@terci.net</a></div></section><Footer/>
   </main>;
 }
 
