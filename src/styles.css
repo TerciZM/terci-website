@@ -158,3 +158,9 @@
 .retail-shop-page .shop-retail-hero>div:last-child{min-height:0!important;height:190px!important}
 .retail-shop-page .shop-retail-benefits span{padding:10px 18px!important}
 @media(max-width:620px){.retail-shop-page .shop-retail-hero{height:auto!important;max-height:none!important;grid-template-columns:1fr!important}.retail-shop-page .shop-retail-hero>div:first-child{padding:20px!important}.retail-shop-page .shop-retail-hero h1{font-size:31px!important}.retail-shop-page .shop-retail-hero>div:last-child{height:120px!important;min-height:120px!important}.mobile-nav .mobile-shop-link{background:transparent!important;color:inherit!important;border-radius:0!important;padding:inherit!important;font-weight:inherit!important}}
+
+/* Center SHOP on its own row beneath desktop navigation */
+@media(min-width:901px){
+  .corporate-nav{display:flex!important;flex-wrap:wrap!important;justify-content:center!important}
+  .corporate-nav .shop-nav-second-row{flex:0 0 100%!important;justify-content:center!important;text-align:center!important;font-size:24px!important;font-weight:800!important;line-height:1.05!important;margin-top:7px!important;padding:5px 0!important}
+}
