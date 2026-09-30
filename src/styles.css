@@ -146,3 +146,15 @@
 .retail-shop-page .shop-retail-hero a{margin-top:12px;padding:11px 16px}
 .retail-shop-page .shop-retail-benefits span{padding-top:14px;padding-bottom:14px}
 @media(max-width:620px){.retail-shop-page .shop-retail-hero{min-height:0}.retail-shop-page .shop-retail-hero>div:first-child{padding:25px 21px}.retail-shop-page .shop-retail-hero h1{font-size:34px}.retail-shop-page .shop-retail-hero>div:last-child{min-height:170px}}
+
+/* Final compact Shop header treatment */
+.corporate-nav .shop-nav-link{display:inline-flex;align-items:center;padding:0!important;border-radius:0!important;background:transparent!important;color:inherit!important;font-weight:inherit!important;box-shadow:none!important;transform:none!important}
+.corporate-nav .shop-nav-link:hover,.corporate-nav .shop-nav-link[aria-current="page"]{background:transparent!important;color:#d41920!important;box-shadow:none!important;transform:none!important}
+.retail-shop-page .shop-retail-hero{min-height:0!important;height:190px!important;max-height:190px!important;grid-template-columns:1.35fr .65fr!important}
+.retail-shop-page .shop-retail-hero>div:first-child{padding:20px 38px!important}
+.retail-shop-page .shop-retail-hero h1{font-size:36px!important;line-height:.95!important;margin:5px 0!important}
+.retail-shop-page .shop-retail-hero p{font-size:11px!important;line-height:1.35!important;max-width:650px!important;margin:2px 0!important}
+.retail-shop-page .shop-retail-hero a{margin-top:7px!important;padding:8px 13px!important}
+.retail-shop-page .shop-retail-hero>div:last-child{min-height:0!important;height:190px!important}
+.retail-shop-page .shop-retail-benefits span{padding:10px 18px!important}
+@media(max-width:620px){.retail-shop-page .shop-retail-hero{height:auto!important;max-height:none!important;grid-template-columns:1fr!important}.retail-shop-page .shop-retail-hero>div:first-child{padding:20px!important}.retail-shop-page .shop-retail-hero h1{font-size:31px!important}.retail-shop-page .shop-retail-hero>div:last-child{height:120px!important;min-height:120px!important}.mobile-nav .mobile-shop-link{background:transparent!important;color:inherit!important;border-radius:0!important;padding:inherit!important;font-weight:inherit!important}}
