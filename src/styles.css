@@ -194,3 +194,6 @@
 .picture-slot small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media(max-width:900px){.picture-slot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.picture-slot-grid{grid-template-columns:1fr}}
+
+.picture-slot .remove-picture{margin-top:3px;width:100%;padding:7px 9px;border:1px solid #d41920;border-radius:4px;background:#fff;color:#d41920;font-size:11px;font-weight:800;cursor:pointer}
+.picture-slot .remove-picture:hover{background:#d41920;color:#fff}
