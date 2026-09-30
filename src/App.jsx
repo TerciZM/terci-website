@@ -33,34 +33,40 @@ const categories = [
 
 
 const shopSeedProducts = [
-  ["cat6-rj45","CAT6 RJ45 Plug","Networking","CAT6 modular connector for structured network cabling.",3],
-  ["cat6-pass-through","CAT6 Pass-through RJ45 Plug","Networking","Pass-through CAT6 connector for faster termination and conductor checks.",5],
-  ["rj45-boot","RJ45 Boot","Networking","Protective strain-relief boot for RJ45 network connectors.",4],
-  ["cat6-keystone","CAT6 Keystone Jack","Networking","CAT6 UTP keystone jack for faceplates, boxes and patching points.",35],
-  ["faceplate-1","1-Port Faceplate","Networking","Single-port data faceplate for clean network outlet installations.",25],
-  ["faceplate-2","2-Port Faceplate","Networking","Dual-port data faceplate for structured cabling outlets.",35],
-  ["surface-box","Surface Mount Box","Networking","Surface-mount box for network and data outlet installations.",30],
-  ["rj45-coupler","RJ45 Coupler","Networking","Female-to-female RJ45 coupler for joining Ethernet patch leads.",35],
-  ["patch-1m","CAT6 Patch Cord – 1m","Networking","CAT6 Ethernet patch lead for racks, desks and network equipment.",55],
-  ["patch-2m","CAT6 Patch Cord – 2m","Networking","CAT6 Ethernet patch lead for racks, desks and network equipment.",65],
-  ["patch-3m","CAT6 Patch Cord – 3m","Networking","CAT6 Ethernet patch lead for racks, desks and network equipment.",75],
-  ["patch-panel-24","24-Port CAT6 Patch Panel","Networking","24-port CAT6 patch panel for structured cabling racks and cabinets.",950],
-  ["crimp-tool","RJ45 Crimping Tool","Tools & Test Equipment","Hand crimping tool for terminating RJ45 network connectors.",400],
-  ["network-tester","Network Cable Tester","Tools & Test Equipment","Basic LAN cable tester for continuity and wire-map checks.",750],
-  ["cable-ties","Cable Ties","Accessories","General-purpose cable ties for neat cable management.",50],
-  ["velcro-ties","Velcro Cable Ties","Accessories","Reusable hook-and-loop ties for network and fibre cable management.",100],
-  ["cage-nuts","Cage Nuts + Screws","Accessories","Rack mounting hardware for switches, patch panels and accessories.",5],
-  ["sc-pigtail","SC/UPC Pigtail 1m","Fibre","Single-mode SC/UPC fibre pigtail for splicing and termination.",30],
-  ["sc-lc-patch","SC/UPC–LC/UPC Patch Cord","Fibre","Single-mode fibre patch cord for equipment and ODF interconnection.",120],
-  ["splice-sleeve","60mm Fibre Splice Sleeve","Fibre","Heat-shrink protection sleeve for fusion-spliced fibre joints.",3],
-].map(([id,name,category,description,price], index) => ({
-  id, name, category, description, price,
-  stockStatus: "Available on Order",
-  isActive: true,
-  isFeatured: index < 4,
-  estimated: true,
+  ["cat6-rj45","CAT6 RJ45 Plug","Networking","CAT6 modular connector for structured network cabling.",3,"In Stock","/images/outdoor-ap.jpeg","BEST SELLER"],
+  ["cat6-pass-through","CAT6 Pass-through RJ45 Plug","Networking","Pass-through CAT6 connector for faster termination.",5,"In Stock","/images/outdoor-ap.jpeg","POPULAR"],
+  ["rj45-boot","RJ45 Boot","Networking","Protective strain-relief boot for RJ45 network connectors.",4,"In Stock","/images/outdoor-ap.jpeg",""],
+  ["cat6-keystone","CAT6 Keystone Jack","Networking","CAT6 UTP keystone jack for faceplates and patching points.",35,"Low Stock","/images/outdoor-ap.jpeg","HOT DEAL"],
+  ["faceplate-1","1-Port Faceplate","Networking","Single-port data faceplate for clean network outlet installations.",25,"In Stock","/images/outdoor-ap.jpeg",""],
+  ["patch-panel-24","24-Port CAT6 Patch Panel","Networking","24-port CAT6 patch panel for racks and cabinets.",950,"Available on Order","/images/fibre-rack-termination.webp",""],
+  ["wifi-ap","Business Wi-Fi Access Point","Networking","Dual-band access point sample for office and hospitality Wi-Fi.",1850,"Available on Order","/images/outdoor-ap.jpeg","NEW"],
+  ["gigabit-switch","8-Port Gigabit Switch","Networking","Compact unmanaged gigabit switch sample for small networks.",850,"In Stock","/images/client-handover.jpeg","DEAL"],
+  ["sc-pigtail","SC/UPC Pigtail 1m","Fibre","Single-mode SC/UPC fibre pigtail for splicing and termination.",30,"In Stock","/images/fibre-rack-termination.webp",""],
+  ["sc-lc-patch","SC/UPC–LC/UPC Patch Cord","Fibre","Single-mode fibre patch cord for equipment and ODF interconnection.",120,"In Stock","/images/fibre-rack-termination.webp","POPULAR"],
+  ["splice-sleeve","60mm Fibre Splice Sleeve","Fibre","Heat-shrink protection sleeve for fusion-spliced fibre joints.",3,"In Stock","/images/fibre-cable-preparation.webp",""],
+  ["fibre-odf","12-Core Fibre ODF","Fibre","Compact fibre distribution frame sample for termination and patching.",850,"Available on Order","/images/fibre-rack-termination.webp",""],
+  ["fibre-closure","24-Core Fibre Joint Closure","Fibre","Outdoor splice closure sample for aerial and underground fibre routes.",1250,"Available on Order","/images/fibre-cable-preparation.webp",""],
+  ["fibre-drum","Single-Mode Fibre Cable","Fibre","Outdoor single-mode fibre cable sample. Final price depends on core count and length.",20,"Available on Order","/images/fibre-route-field-work.webp","FROM / METRE"],
+  ["crimp-tool","RJ45 Crimping Tool","Tools & Test Equipment","Hand crimping tool for terminating RJ45 network connectors.",400,"In Stock","/images/fibre-cable-preparation.webp",""],
+  ["network-tester","Network Cable Tester","Tools & Test Equipment","Basic LAN cable tester for continuity and wire-map checks.",750,"Low Stock","/images/client-handover.jpeg","POPULAR"],
+  ["fusion-splicer","Fusion Splicer – 6 Motor","Tools & Test Equipment","Sample core-alignment fusion splicer for professional fibre work.",7500,"Available on Order","/images/fibre-fusion-splicer.webp","FEATURED"],
+  ["otdr","Dual-Wavelength OTDR","Tools & Test Equipment","1310/1550nm OTDR sample for fibre testing and fault location.",6500,"Available on Order","/images/fibre-fusion-splicer.webp","NEW"],
+  ["cctv-dome","4MP IP Dome Camera","CCTV & Security","4MP network dome camera sample for business and residential surveillance.",1250,"Available on Order","/images/cctv-industrial-camera.jpeg",""],
+  ["cctv-bullet","4MP IP Bullet Camera","CCTV & Security","Outdoor 4MP network bullet camera sample with infrared night vision.",1350,"Available on Order","/images/hero-cctv-camera.webp","POPULAR"],
+  ["nvr-8ch","8-Channel Network Video Recorder","CCTV & Security","8-channel NVR sample for small CCTV installations.",2800,"Available on Order","/images/cctv-industrial-camera.jpeg",""],
+  ["ax-alarm","Wireless Alarm Starter Kit","CCTV & Security","Wireless intrusion alarm starter package sample.",4500,"Available on Order","/images/cctv-industrial-camera.jpeg","NEW"],
+  ["starlink-mini","Starlink Mini Kit","Starlink","Compact Starlink kit sample for portable and remote connectivity.",4900,"Available on Order","/images/starlink-hero.jpeg","POPULAR"],
+  ["starlink-standard","Starlink Standard Kit","Starlink","Standard Starlink kit sample for homes and business connectivity.",9500,"Available on Order","/images/starlink-hero.jpeg","BUSINESS PICK"],
+  ["starlink-bracket","Starlink Mounting Bracket","Starlink","Mounting bracket sample for secure Starlink installations.",700,"In Stock","/images/hero-starlink-installation.webp",""],
+  ["starlink-cable","Starlink Extended Cable","Starlink","Extended Starlink cable sample for installations requiring longer runs.",1800,"Available on Order","/images/hero-starlink-installation.webp",""],
+  ["ups-650","650VA UPS","Power & Solar","Backup power sample for routers, switches and small ICT equipment.",1200,"Available on Order","/images/electrical-board.jpeg",""],
+  ["dc-backup","Router DC Backup Unit","Power & Solar","Compact DC backup sample for routers and connectivity equipment.",850,"Available on Order","/images/electrical-board.jpeg",""],
+  ["cable-ties","Cable Ties – Pack","Accessories","General-purpose cable ties for neat cable management.",50,"In Stock","/images/fibre-cable-preparation.webp",""],
+  ["velcro-ties","Velcro Cable Ties – Pack","Accessories","Reusable hook-and-loop ties for network and fibre cable management.",100,"In Stock","/images/fibre-cable-preparation.webp",""],
+].map(([id,name,category,description,price,stockStatus,imageUrl,promo], index) => ({
+  id, name, category, description, price, stockStatus, imageUrl, promo,
+  isActive: true, isFeatured: index < 8, estimated: true, demo: true,
 }));
-
 const heroSlides = [
   {
     image: "/images/hero-starlink-installation.webp",
@@ -138,7 +144,7 @@ const categoryFallback = (category = "") => {
 function ProductCard({ product }) {
   const enquire = () => fetch(`${API}/enquiries/${product.id}`, { method: "POST" }).catch(() => {});
   return <article className="product-card">
-    <div className="product-image"><img src={product.imageUrl || categoryFallback(product.category)} alt={product.name}/><span>{product.stockStatus || "Ask for availability"}</span></div>
+    <div className="product-image"><img src={product.imageUrl || categoryFallback(product.category)} alt={product.name}/>{product.promo && <b className="product-promo">{product.promo}</b>}<span>{product.stockStatus || "Ask for availability"}</span></div>
     <div className="product-copy"><small>{product.category || "TERCI SUPPLY"}</small><h3>{product.name}</h3><p>{product.description || "Contact our team for specifications, availability and installation support."}</p>{product.estimated && <span className="estimate-note">Estimated price · confirm on order</span>}<div><b>{Number(product.price) > 0 ? `${product.estimated ? "From " : ""}K${Number(product.price).toLocaleString("en-ZM", { maximumFractionDigits: 2 })}` : "Request price"}</b><a href={`${WA}?text=${encodeURIComponent(`Hello Terci, I am interested in ${product.name}. Please confirm the current price and availability.`)}`} onClick={enquire} target="_blank" rel="noreferrer">Order on WhatsApp <span>↗</span></a></div></div>
   </article>;
 }
@@ -173,7 +179,7 @@ function PublicCatalogue() {
   const visible = filter === "All" ? catalogue : catalogue.filter((product) => product.category === filter);
   return <div className="catalogue-wrap">
     <div className="shop-filters" aria-label="Shop categories">{filters.map((name) => <button className={filter === name ? "active" : ""} onClick={() => setFilter(name)} key={name}>{name}</button>)}</div>
-    {!products.length && !loading && <p className="catalogue-status">Starter catalogue shown with estimated prices. Current price and availability are confirmed when you order.</p>}
+    {!products.length && !loading && <p className="catalogue-status">Demo catalogue shown with sample products, estimated prices and sample stock statuses. Current price and actual availability are confirmed when you order.</p>}
     <div className="product-grid">{visible.map((product) => <ProductCard product={product} key={product.id}/>)}</div>
   </div>;
 }
@@ -204,7 +210,7 @@ function Home() {
     </section>
     <nav className="retail-category-nav" aria-label="Shop categories"><a href="/shop">Shop</a><a href="/shop?q=networking">Networking</a><a href="/shop?q=fibre">Fibre</a><a href="/shop?q=cctv">CCTV &amp; Security</a><a href="/shop?q=starlink">Starlink</a><a href="/shop?q=tools">Tools</a><a href="/fiber">Fibre Services</a></nav>
     <section className="retail-hero">
-      <div className="retail-hero-copy"><span className="retail-pill">TERCI SHOP · ZAMBIA</span><h1>Technology for the job.<br/><em>Ready when you are.</em></h1><p>Networking, fibre, CCTV, Starlink and installation essentials—supplied with practical technical support.</p><div><a className="retail-primary" href="/shop">Shop products <span>→</span></a><a className="retail-secondary" href={WA + "?text=Hello%20Terci%2C%20please%20help%20me%20with%20a%20product%20quotation."} target="_blank" rel="noreferrer">Request a quote</a></div><small>Estimated catalogue pricing · final price confirmed on order</small></div>
+      <div className="retail-hero-copy"><span className="retail-pill">TERCI SHOP · ZAMBIA</span><h1>Technology for the job.<br/><em>Ready when you are.</em></h1><p>Networking, fibre, CCTV, Starlink and installation essentials—supplied with practical technical support.</p><div><a className="retail-primary" href="/shop">Shop products <span>→</span></a><a className="retail-secondary" href={WA + "?text=Hello%20Terci%2C%20please%20help%20me%20with%20a%20product%20quotation."} target="_blank" rel="noreferrer">Request a quote</a></div><small>Demo catalogue · sample prices and stock statuses · final details confirmed on order</small></div>
       <div className="retail-hero-image"><img src="/images/fibre-rack-termination.webp" alt="Terci networking and fibre equipment"/><div className="hero-price-card"><small>Installer essentials</small><b>Networking + Fibre</b><span>Shop the range →</span></div></div>
     </section>
     <section className="retail-benefits"><span><b>Technical support</b><small>Buy with installer guidance</small></span><span><b>Order on WhatsApp</b><small>Fast quotation & confirmation</small></span><span><b>Nationwide supply</b><small>Delivery arrangements across Zambia</small></span><span><b>Installation available</b><small>Supply + professional deployment</small></span></section>
