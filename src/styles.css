@@ -136,3 +136,13 @@
 .catalogue-loading{font-size:11px;color:#777}.retail-shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.retail-shop-grid .product-card{border:1px solid #e5e5e5;background:#fff;box-shadow:none}.retail-shop-grid .product-image{height:235px}.retail-shop-grid .product-copy{padding:18px}.retail-shop-grid .product-copy h3{font-size:15px}.retail-shop-grid .product-copy>p{font-size:11px;min-height:48px}.retail-shop-grid .product-copy>div{display:flex;flex-direction:column;align-items:stretch;gap:11px}.retail-shop-grid .product-copy>div>b{font-size:20px;color:#d41920}.retail-shop-grid .product-copy>div>a{background:#d41920;color:#fff;text-align:center;padding:11px;border-radius:3px;font-size:10px;font-weight:900}.retail-shop-grid .product-card:hover{transform:translateY(-2px);box-shadow:0 12px 28px #00000012}
 @media(max-width:1000px){.retail-shop-grid{grid-template-columns:repeat(3,1fr)}.shop-retail-benefits{grid-template-columns:1fr 1fr}.shop-retail-hero{grid-template-columns:1fr}.shop-retail-hero>div:last-child{min-height:260px}}
 @media(max-width:620px){.shop-retail-hero{margin:12px;min-height:0}.shop-retail-hero>div:first-child{padding:35px 24px}.shop-retail-hero h1{font-size:40px}.shop-retail-benefits{margin:0 12px;grid-template-columns:1fr 1fr}.shop-retail-benefits span{padding:14px}.retail-shop-grid{grid-template-columns:1fr 1fr;gap:8px}.retail-shop-grid .product-image{height:150px}.retail-shop-grid .product-copy{padding:11px}.retail-shop-grid .product-copy>p{display:none}.catalogue-toolbar{align-items:stretch;flex-direction:column}.catalogue-search{max-width:none;width:100%}}
+
+
+/* Compact Shop hero */
+.retail-shop-page .shop-retail-hero{min-height:245px;grid-template-columns:1.15fr .85fr}
+.retail-shop-page .shop-retail-hero>div:first-child{padding:32px clamp(28px,4vw,52px)}
+.retail-shop-page .shop-retail-hero h1{font-size:clamp(34px,4vw,50px);margin:9px 0}
+.retail-shop-page .shop-retail-hero p{font-size:13px;line-height:1.5;margin:4px 0}
+.retail-shop-page .shop-retail-hero a{margin-top:12px;padding:11px 16px}
+.retail-shop-page .shop-retail-benefits span{padding-top:14px;padding-bottom:14px}
+@media(max-width:620px){.retail-shop-page .shop-retail-hero{min-height:0}.retail-shop-page .shop-retail-hero>div:first-child{padding:25px 21px}.retail-shop-page .shop-retail-hero h1{font-size:34px}.retail-shop-page .shop-retail-hero>div:last-child{min-height:170px}}
