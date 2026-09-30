@@ -203,7 +203,7 @@ function Home() {
     return () => window.clearInterval(timer);
   }, []);
   const current = heroSlides[slide];
-  return <main className="home-corporate"><Header/>
+  return <main className="home-corporate"><Header/><div className="home-shop-link"><a href="/shop">SHOP</a></div>
     <section className="corp-hero" id="home">
       <div className="corp-hero-images" aria-hidden="true">{heroSlides.map((item, index) => <img className={index === slide ? "active" : ""} src={item.image} alt="" key={item.image}/>)}</div><div className="corp-hero-shade"/>
       <div className="corp-hero-content"><p className="eyebrow">{current.kicker}</p><h1>{current.title[0]}<span>{current.title[1]}</span></h1><p>{current.text}</p><div className="hero-actions"><a className="btn primary" href={`${WA}?text=Hello%20Terci%20Communications%2C%20I%20would%20like%20to%20discuss%20a%20project.`} target="_blank" rel="noreferrer">Talk to our team <span>↗</span></a><a className="btn glass" href="#services">Explore our solutions <span>↓</span></a></div></div>
