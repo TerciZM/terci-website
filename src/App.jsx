@@ -173,14 +173,26 @@ function FeaturedProducts() {
 
 function PublicCatalogue() {
   const { loading, products } = usePublicProducts();
-  const catalogue = products.length ? products : shopSeedProducts;
+  const backendIds = new Set(products.map((product) => product.id));
+  const catalogue = [...products, ...shopSeedProducts.filter((product) => !backendIds.has(product.id))];
+  const params = new URLSearchParams(window.location.search);
+  const initialQuery = params.get("q") || "";
+  const [query, setQuery] = useState(initialQuery);
   const [filter, setFilter] = useState("All");
   const filters = ["All", ...new Set(catalogue.map((product) => product.category).filter(Boolean))];
-  const visible = filter === "All" ? catalogue : catalogue.filter((product) => product.category === filter);
-  return <div className="catalogue-wrap">
+  const term = query.trim().toLowerCase();
+  const visible = catalogue.filter((product) => {
+    const matchesFilter = filter === "All" || product.category === filter;
+    const haystack = [product.name, product.category, product.description].join(" ").toLowerCase();
+    return matchesFilter && (!term || haystack.includes(term));
+  });
+  return <div className="catalogue-wrap retail-catalogue">
+    <div className="catalogue-toolbar"><div className="catalogue-search"><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search products, categories or equipment…"/><span>⌕</span></div><b>{visible.length} products</b></div>
     <div className="shop-filters" aria-label="Shop categories">{filters.map((name) => <button className={filter === name ? "active" : ""} onClick={() => setFilter(name)} key={name}>{name}</button>)}</div>
-    {!products.length && !loading && <p className="catalogue-status">Demo catalogue shown with sample products, estimated prices and sample stock statuses. Current price and actual availability are confirmed when you order.</p>}
-    <div className="product-grid">{visible.map((product) => <ProductCard product={product} key={product.id}/>)}</div>
+    <p className="catalogue-status">Demo catalogue: sample products, prices and stock statuses are shown for layout purposes. Terci confirms actual price and availability before an order is processed.</p>
+    {loading && <p className="catalogue-loading">Checking the latest Terci catalogue…</p>}
+    <div className="retail-shop-grid">{visible.map((product) => <ProductCard product={product} key={(product.demo ? "demo-" : "live-") + product.id}/>)}</div>
+    {!visible.length && <div className="empty-catalog"><b>No matching products</b><p>Try another search or ask Terci to source the item for you.</p></div>}
   </div>;
 }
 
@@ -226,7 +238,14 @@ function Home() {
 }
 
 function Shop() {
-  return <main className="shop-page"><Header active="shop"/><section className="shop-hero"><div><p className="eyebrow">Terci shop</p><h1>Technology selected for <em>real-world use.</em></h1><p>Browse networking, fibre, tools and technology supplied by Terci Communications. Estimated prices are confirmed when you order, with delivery and installation support available.</p></div><div className="shop-orbit" aria-hidden="true"><span>STARLINK</span><span>CCTV</span><span>FIBRE</span><span>NETWORKING</span><b>TERCI<br/>SUPPLY</b></div></section><section className="shop-listing"><div className="shop-title"><div><p className="eyebrow">What we supply</p><h2>Equipment for your next project.</h2></div><p>Start with our networking and fibre essentials, then order directly on WhatsApp. Items not yet physically stocked are clearly marked Available on Order.</p></div><PublicCatalogue/></section><section className="shop-support"><p className="eyebrow">More than a product</p><h2>Supply, installation and support—from one team.</h2><p>Terci can help you select the right equipment, install it professionally and support it after commissioning.</p><a className="btn white" href={`${WA}?text=Hello%20Terci%2C%20please%20help%20me%20scope%20an%20equipment%20and%20installation%20requirement.`} target="_blank" rel="noreferrer">Discuss your requirement <span>↗</span></a></section><Footer/></main>;
+  return <main className="shop-page retail-shop-page"><Header active="shop"/>
+    <section className="retail-searchbar shop-searchbar"><a className="retail-shop-all" href="/shop">☰ <span>All products</span></a><form onSubmit={(e) => {e.preventDefault(); const input=e.currentTarget.elements.namedItem("shopSearch"); window.location.href="/shop?q="+encodeURIComponent(input.value);}}><input name="shopSearch" defaultValue={new URLSearchParams(window.location.search).get("q") || ""} placeholder="Search the Terci Shop…"/><button type="submit">Search</button></form><a className="retail-help" href={WA + "?text=Hello%20Terci%2C%20I%20need%20help%20finding%20a%20product."} target="_blank" rel="noreferrer"><small>Can't find it?</small><b>Ask Terci</b></a></section>
+    <nav className="retail-category-nav"><a href="/shop">Shop all</a><a href="/shop?q=Networking">Networking</a><a href="/shop?q=Fibre">Fibre</a><a href="/shop?q=CCTV">CCTV &amp; Security</a><a href="/shop?q=Starlink">Starlink</a><a href="/shop?q=Tools">Tools &amp; Test</a><a href="/shop?q=Power">Power &amp; Solar</a></nav>
+    <section className="shop-retail-hero"><div><span>TERCI SHOP</span><h1>Equipment for every<br/><em>installation.</em></h1><p>Networking, fibre, CCTV, Starlink, tools and accessories—with technical support when you need it.</p><a href="#catalogue">Shop the catalogue →</a></div><div><img src="/images/fibre-fusion-splicer.webp" alt="Terci installation equipment"/></div></section>
+    <section className="shop-retail-benefits"><span><b>Installer pricing</b><small>Ask about bulk quantities</small></span><span><b>WhatsApp ordering</b><small>Fast confirmation and quotation</small></span><span><b>Technical guidance</b><small>Buy the right item for the job</small></span><span><b>Supply + installation</b><small>One team from purchase to handover</small></span></section>
+    <section className="shop-listing retail-shop-listing" id="catalogue"><div className="shop-title retail-shop-title"><div><p className="eyebrow">SHOP THE RANGE</p><h2>Everything for the next job.</h2></div><p>Browse the demonstration catalogue below. Use search or category filters to quickly narrow down the equipment you need.</p></div><PublicCatalogue/></section>
+    <section className="retail-contact"><div><small>NEED SOMETHING ELSE?</small><h2>Ask Terci to source it.</h2><p>Send us a product name, model number, photo or specification and we'll help with a quotation.</p></div><a href={WA + "?text=Hello%20Terci%2C%20please%20help%20me%20source%20an%20item."} target="_blank" rel="noreferrer">Ask on WhatsApp <span>↗</span></a></section><Footer/>
+  </main>;
 }
 
 function Fiber() {
