@@ -205,3 +205,9 @@
 .saved-picture-item span{display:block;min-height:28px;margin-bottom:6px;font-size:10px;font-weight:800;color:#444}
 .saved-picture-item .remove-picture{width:100%;padding:6px;border:1px solid #d41920;border-radius:4px;background:#fff;color:#d41920;font-size:11px;font-weight:800;cursor:pointer}
 .saved-picture-item .remove-picture:hover{background:#d41920;color:#fff}
+
+/* Remove product action inside Edit Product */
+.edit-remove-product{display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid #e3e3e3}
+.edit-remove-product .remove-product-button{padding:10px 16px;border:1px solid #d41920;border-radius:4px;background:#d41920;color:#fff;font-weight:800;cursor:pointer}
+.edit-remove-product .remove-product-button:hover{background:#a90f15}
+.edit-remove-product small{color:#777}
