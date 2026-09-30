@@ -173,8 +173,8 @@ function FeaturedProducts() {
 
 function PublicCatalogue() {
   const { loading, products } = usePublicProducts();
-  const backendIds = new Set(products.map((product) => product.id));
-  const catalogue = [...products, ...shopSeedProducts.filter((product) => !backendIds.has(product.id))];
+  // The public Shop mirrors the Admin catalogue exactly. No demo products are merged here.
+  const catalogue = products;
   const params = new URLSearchParams(window.location.search);
   const initialQuery = params.get("q") || "";
   const [query, setQuery] = useState(initialQuery);
@@ -189,10 +189,10 @@ function PublicCatalogue() {
   return <div className="catalogue-wrap retail-catalogue">
     <div className="catalogue-toolbar"><div className="catalogue-search"><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search products, categories or equipment…"/><span>⌕</span></div><b>{visible.length} products</b></div>
     <div className="shop-filters" aria-label="Shop categories">{filters.map((name) => <button className={filter === name ? "active" : ""} onClick={() => setFilter(name)} key={name}>{name}</button>)}</div>
-    <p className="catalogue-status">Demo catalogue: sample products, prices and stock statuses are shown for layout purposes. Terci confirms actual price and availability before an order is processed.</p>
+    <p className="catalogue-status">Products, prices and availability shown here are managed from the Terci Admin catalogue.</p>
     {loading && <p className="catalogue-loading">Checking the latest Terci catalogue…</p>}
-    <div className="retail-shop-grid">{visible.map((product) => <ProductCard product={product} key={(product.demo ? "demo-" : "live-") + product.id}/>)}</div>
-    {!visible.length && <div className="empty-catalog"><b>No matching products</b><p>Try another search or ask Terci to source the item for you.</p></div>}
+    <div className="retail-shop-grid">{visible.map((product) => <ProductCard product={product} key={product.id}/>)}</div>
+    {!loading && !visible.length && <div className="empty-catalog"><b>{products.length ? "No matching products" : "Catalogue being updated"}</b><p>{products.length ? "Try another search or ask Terci to source the item for you." : "Products added in Terci Admin will appear here automatically."}</p></div>}
   </div>;
 }
 
