@@ -143,8 +143,13 @@ const categoryFallback = (category = "") => {
 
 function ProductCard({ product }) {
   const enquire = () => fetch(`${API}/enquiries/${product.id}`, { method: "POST" }).catch(() => {});
+  const gallery = Array.isArray(product.imageUrls) ? product.imageUrls.filter(Boolean) : [];
+  const images = [...new Set([product.imageUrl, ...gallery].filter(Boolean))];
+  const [activeImage, setActiveImage] = useState(images[0] || categoryFallback(product.category));
+  useEffect(() => { setActiveImage(images[0] || categoryFallback(product.category)); }, [product.id, product.imageUrl, product.imageUrls]);
   return <article className="product-card">
-    <div className="product-image"><img src={product.imageUrl || categoryFallback(product.category)} alt={product.name}/>{product.promo && <b className="product-promo">{product.promo}</b>}<span>{product.stockStatus || "Ask for availability"}</span></div>
+    <div className="product-image"><img src={activeImage} alt={product.name}/>{product.promo && <b className="product-promo">{product.promo}</b>}<span>{product.stockStatus || "Ask for availability"}</span></div>
+    {images.length > 1 && <div className="product-thumbnails" aria-label={`${product.name} pictures`}>{images.slice(0,5).map((url,index) => <button type="button" className={activeImage === url ? "active" : ""} onClick={() => setActiveImage(url)} key={url}><img src={url} alt={`${product.name} view ${index + 1}`}/></button>)}</div>}
     <div className="product-copy"><small>{product.category || "TERCI SUPPLY"}</small><h3>{product.name}</h3><p>{product.description || "Contact our team for specifications, availability and installation support."}</p>{product.estimated && <span className="estimate-note">Estimated price · confirm on order</span>}<div><b>{Number(product.price) > 0 ? `${product.estimated ? "From " : ""}K${Number(product.price).toLocaleString("en-ZM", { maximumFractionDigits: 2 })}` : "Request price"}</b><a href={`${WA}?text=${encodeURIComponent(`Hello Terci, I am interested in ${product.name}. Please confirm the current price and availability.`)}`} onClick={enquire} target="_blank" rel="noreferrer">Order on WhatsApp <span>↗</span></a></div></div>
   </article>;
 }
@@ -246,7 +251,7 @@ function Fiber() {
 
 const emptyProduct = {
   name: "", category: "", description: "", price: "", stockStatus: "In stock",
-  imageFileId: "", imageName: "", isActive: true, isFeatured: false, enquiries: 0, sortOrder: 0
+  imageFileId: "", imageName: "", imageFileIds: [], imageNames: [], isActive: true, isFeatured: false, enquiries: 0, sortOrder: 0
 };
 
 async function adminRequest(path, options = {}) {
@@ -275,12 +280,12 @@ function fileAsDataUrl(file) {
 
 function ProductForm({ product = emptyProduct, onSave, onError, busy, compact = false, categoryOptions = [] }) {
   const [values, setValues] = useState({ ...emptyProduct, ...product });
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
   const [uploading, setUploading] = useState(false);
   const standardCategories = ["Networking", "Fibre", "CCTV & Security", "Starlink", "Tools & Test Equipment", "Power & Solar", "Accessories"];
   const availableCategories = [...new Set([...standardCategories, ...categoryOptions, ...(product.category ? [product.category] : [])].filter(Boolean))].sort((a,b) => a.localeCompare(b));
   const [addingCategory, setAddingCategory] = useState(false);
-  useEffect(() => { setValues({ ...emptyProduct, ...product }); setImage(null); setAddingCategory(false); }, [product.id]);
+  useEffect(() => { setValues({ ...emptyProduct, ...product }); setImages([]); setAddingCategory(false); }, [product.id]);
   const change = (event) => {
     const { name, value, type, checked } = event.target;
     setValues((current) => ({ ...current, [name]: type === "checkbox" ? checked : value }));
@@ -291,12 +296,16 @@ function ProductForm({ product = emptyProduct, onSave, onError, busy, compact = 
     setUploading(true);
     try {
       let next = { ...values, price: Number(values.price || 0), sortOrder: Number(values.sortOrder || 0) };
-      if (image) {
-        const uploaded = await adminRequest("/admin/upload", { method: "POST", body: JSON.stringify({ fileName: image.name, contentType: image.type, data: await fileAsDataUrl(image) }) });
-        next = { ...next, imageFileId: uploaded.imageFileId, imageName: uploaded.imageName };
+      if (images.length) {
+        const uploadedImages = [];
+        for (const image of images.slice(0, 5)) {
+          const uploaded = await adminRequest("/admin/upload", { method: "POST", body: JSON.stringify({ fileName: image.name, contentType: image.type, data: await fileAsDataUrl(image) }) });
+          uploadedImages.push(uploaded);
+        }
+        next = { ...next, imageFileId: uploadedImages[0].imageFileId, imageName: uploadedImages[0].imageName, imageFileIds: uploadedImages.map((item) => item.imageFileId), imageNames: uploadedImages.map((item) => item.imageName) };
       }
       const saved = await onSave(next);
-      if (saved !== false && !product.id) { setValues({ ...emptyProduct }); setImage(null); form.reset(); }
+      if (saved !== false && !product.id) { setValues({ ...emptyProduct }); setImages([]); form.reset(); }
     } catch (error) {
       onError?.(error.message);
     } finally {
@@ -310,7 +319,7 @@ function ProductForm({ product = emptyProduct, onSave, onError, busy, compact = 
     <label>Price in ZMW<input name="price" value={values.price} onChange={change} type="number" min="0" step="0.01" placeholder="0 means Request price"/></label>
     <label>Stock status<select name="stockStatus" value={values.stockStatus} onChange={change} required><option>In stock</option><option>Available to order</option><option>Limited stock</option><option>Out of stock</option></select></label>
     <label>Display order<input name="sortOrder" value={values.sortOrder} onChange={change} type="number" step="1"/></label>
-    <label className="file-input">Product picture<input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => setImage(event.target.files[0] || null)}/><small>JPG, PNG, WebP or GIF, maximum 5 MB</small></label>
+    <label className="file-input">Product pictures<input type="file" multiple accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => { const selected = Array.from(event.target.files || []).slice(0,5); setImages(selected); }}/><small>Select up to 5 pictures. The first picture becomes the main catalogue image. JPG, PNG, WebP or GIF, maximum 5 MB each.</small>{images.length > 0 && <span className="admin-image-count">{images.length} picture{images.length === 1 ? "" : "s"} selected</span>}</label>
     <label className="feature-check"><input name="isActive" type="checkbox" checked={values.isActive} onChange={change}/><span><b>Visible in catalogue</b><small>Turn this off to hide the product.</small></span></label>
     <label className="feature-check"><input name="isFeatured" type="checkbox" checked={values.isFeatured} onChange={change}/><span><b>Feature on homepage</b><small>Show this item in the home product section.</small></span></label>
     <button disabled={busy || uploading} type="submit"><span>{busy || uploading ? "Saving…" : product.id ? "Save changes" : "Add product"}</span><span>→</span></button>
