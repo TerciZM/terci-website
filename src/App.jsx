@@ -197,43 +197,35 @@ function PublicCatalogue() {
 }
 
 function Home() {
-  const [query, setQuery] = useState("");
-  const submitSearch = (event) => {
-    event.preventDefault();
-    const term = query.trim();
-    window.location.href = term ? "/shop?q=" + encodeURIComponent(term) : "/shop";
-  };
-  const retailCategories = [
-    ["Networking", "RJ45, patching & Wi-Fi", "/images/outdoor-ap.jpeg"],
-    ["Fibre", "Pigtails, patch cords & accessories", "/images/fibre-rack-termination.webp"],
-    ["CCTV & Security", "Cameras, recorders & protection", "/images/cctv-industrial-camera.jpeg"],
-    ["Starlink", "Kits, mounting & connectivity", "/images/starlink-hero.jpeg"],
-    ["Tools & Test", "Installation & testing tools", "/images/fibre-fusion-splicer.webp"],
-    ["Power & Solar", "Reliable ICT power support", "/images/electrical-board.jpeg"],
-  ];
-  const featured = shopSeedProducts.slice(0, 8);
-  const networkDeals = shopSeedProducts.filter((p) => p.category === "Networking").slice(0, 4);
-  const fibreDeals = shopSeedProducts.filter((p) => p.category === "Fibre").slice(0, 4);
-  return <main className="retail-home"><Header/>
-    <section className="retail-searchbar">
-      <a className="retail-shop-all" href="/shop">☰ <span>Shop all</span></a>
-      <form onSubmit={submitSearch}><input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="What are you looking for?" aria-label="Search Terci shop"/><button type="submit">Search</button></form>
-      <a className="retail-help" href={WA + "?text=Hello%20Terci%2C%20I%20need%20help%20choosing%20a%20product."} target="_blank" rel="noreferrer"><small>Need help?</small><b>WhatsApp us</b></a>
+  const [slide, setSlide] = useState(0);
+  useEffect(() => {
+    const timer = window.setInterval(() => setSlide((current) => (current + 1) % heroSlides.length), 7000);
+    return () => window.clearInterval(timer);
+  }, []);
+  const current = heroSlides[slide];
+  return <main className="home-corporate"><Header/>
+    <section className="corp-hero" id="home">
+      <div className="corp-hero-images" aria-hidden="true">{heroSlides.map((item, index) => <img className={index === slide ? "active" : ""} src={item.image} alt="" key={item.image}/>)}</div><div className="corp-hero-shade"/>
+      <div className="corp-hero-content"><p className="eyebrow">{current.kicker}</p><h1>{current.title[0]}<span>{current.title[1]}</span></h1><p>{current.text}</p><div className="hero-actions"><a className="btn primary" href={`${WA}?text=Hello%20Terci%20Communications%2C%20I%20would%20like%20to%20discuss%20a%20project.`} target="_blank" rel="noreferrer">Talk to our team <span>↗</span></a><a className="btn glass" href="#services">Explore our solutions <span>↓</span></a></div></div>
+      <div className="slide-controls" aria-label="Hero slides">{heroSlides.map((item, index) => <button className={index === slide ? "active" : ""} onClick={() => setSlide(index)} aria-label={`Show slide ${index + 1}`} key={item.image}><span>0{index + 1}</span></button>)}</div>
+      <div className="hero-proof"><article><b>12+</b><span>Years of technical experience</span></article><article><b>20+</b><span>Starlink installations delivered</span></article><article><b>10</b><span>Provinces within our field reach</span></article><article><b>End-to-end</b><span>Planning, supply and support</span></article></div>
     </section>
-    <nav className="retail-category-nav" aria-label="Shop categories"><a href="/shop">Shop</a><a href="/shop?q=networking">Networking</a><a href="/shop?q=fibre">Fibre</a><a href="/shop?q=cctv">CCTV &amp; Security</a><a href="/shop?q=starlink">Starlink</a><a href="/shop?q=tools">Tools</a><a href="/fiber">Fibre Services</a></nav>
-    <section className="retail-hero">
-      <div className="retail-hero-copy"><span className="retail-pill">TERCI SHOP · ZAMBIA</span><h1>Technology for the job.<br/><em>Ready when you are.</em></h1><p>Networking, fibre, CCTV, Starlink and installation essentials—supplied with practical technical support.</p><div><a className="retail-primary" href="/shop">Shop products <span>→</span></a><a className="retail-secondary" href={WA + "?text=Hello%20Terci%2C%20please%20help%20me%20with%20a%20product%20quotation."} target="_blank" rel="noreferrer">Request a quote</a></div><small>Demo catalogue · sample prices and stock statuses · final details confirmed on order</small></div>
-      <div className="retail-hero-image"><img src="/images/fibre-rack-termination.webp" alt="Terci networking and fibre equipment"/><div className="hero-price-card"><small>Installer essentials</small><b>Networking + Fibre</b><span>Shop the range →</span></div></div>
-    </section>
-    <section className="retail-benefits"><span><b>Technical support</b><small>Buy with installer guidance</small></span><span><b>Order on WhatsApp</b><small>Fast quotation & confirmation</small></span><span><b>Nationwide supply</b><small>Delivery arrangements across Zambia</small></span><span><b>Installation available</b><small>Supply + professional deployment</small></span></section>
-    <section className="retail-section retail-categories"><div className="retail-heading"><div><small>SHOP BY CATEGORY</small><h2>Find what you need.</h2></div><a href="/shop">View all products →</a></div><div className="retail-category-grid">{retailCategories.map(([name,desc,image])=><a href={"/shop?q=" + encodeURIComponent(name)} key={name}><div><img src={image} alt=""/></div><h3>{name}</h3><p>{desc}</p><span>Shop now →</span></a>)}</div></section>
-    <section className="retail-section retail-products"><div className="retail-heading"><div><small>POPULAR RIGHT NOW</small><h2>Installer essentials.</h2></div><a href="/shop">Shop all →</a></div><div className="retail-product-grid">{featured.map((p)=><ProductCard product={p} key={p.id}/>)}</div></section>
-    <section className="retail-promo-row"><a href="/shop?q=Networking" className="retail-promo networking"><div><small>NETWORKING ESSENTIALS</small><h2>Build it clean.<br/>Connect it right.</h2><p>Connectors, patching and structured cabling essentials.</p><span>Shop networking →</span></div><img src="/images/outdoor-ap.jpeg" alt="Networking equipment"/></a><a href="/shop?q=Fibre" className="retail-promo fibre"><div><small>FIBRE ESSENTIALS</small><h2>Splice. Patch.<br/>Test. Deliver.</h2><p>Fibre accessories for installers and field teams.</p><span>Shop fibre →</span></div><img src="/images/fibre-fusion-splicer.webp" alt="Fibre installation equipment"/></a></section>
-    <section className="retail-section retail-products"><div className="retail-heading"><div><small>NETWORKING</small><h2>Everyday network supplies.</h2></div><a href="/shop?q=Networking">See networking →</a></div><div className="retail-product-grid">{networkDeals.map((p)=><ProductCard product={p} key={p.id}/>)}</div></section>
-    <section className="retail-section retail-products"><div className="retail-heading"><div><small>FIBRE</small><h2>Fibre essentials.</h2></div><a href="/shop?q=Fibre">See fibre →</a></div><div className="retail-product-grid">{fibreDeals.map((p)=><ProductCard product={p} key={p.id}/>)}</div></section>
-    <section className="retail-services" id="services"><div><small>TERCI SERVICES</small><h2>Need more than the equipment?</h2><p>Our technical team can survey, install, splice, configure, test and commission the systems we supply.</p><a href="/fiber">Explore fibre services →</a></div><div className="retail-service-links"><a href={WA + "?text=Hello%20Terci%2C%20I%20need%20a%20Starlink%20installation."}>Starlink installation <span>→</span></a><a href={WA + "?text=Hello%20Terci%2C%20I%20need%20CCTV%20installation."}>CCTV &amp; security <span>→</span></a><a href="/fiber">Fibre installation <span>→</span></a><a href={WA + "?text=Hello%20Terci%2C%20I%20need%20network%20installation."}>Networks &amp; Wi-Fi <span>→</span></a></div></section>
-    <section className="retail-contact" id="contact"><div><small>CAN'T FIND WHAT YOU NEED?</small><h2>Ask Terci to source it.</h2><p>Send us the item, model or specification. We can quote supply only or supply and installation.</p></div><a href={WA + "?text=Hello%20Terci%2C%20I%20am%20looking%20for%20an%20item%20that%20is%20not%20listed%20in%20the%20shop."} target="_blank" rel="noreferrer">Ask on WhatsApp <span>↗</span></a></section>
-    <Footer/>
+
+    <section className="corp-intro" id="about"><div className="section-marker"><span>01</span><b>About Terci</b></div><div className="corp-intro-main"><p className="eyebrow">A Zambian technology partner</p><h2>We build the systems that modern organisations depend on.</h2><div className="intro-columns"><p>Terci Communications Limited delivers integrated connectivity, security and ICT infrastructure for businesses, institutions, industrial operations and homes across Zambia.</p><p>Our work combines hands-on field capability with structured planning, clear documentation and ongoing technical support—from the first site survey to final handover.</p></div><a className="text-link" href="#approach">Discover how we work <span>→</span></a></div></section>
+
+    <section className="corp-solutions" id="services"><div className="corp-section-head"><div><p className="eyebrow">Our solutions</p><h2>One accountable partner.<br/>Six connected capabilities.</h2></div><p>Practical technology designed around your site, operational risks and growth plans—not a one-size-fits-all package.</p></div><div className="solution-grid">{services.map(([n,title,text,id])=><article className="solution-card" id={id} key={title}><div className="solution-image"><img src={serviceImages[id]} alt="" loading="lazy"/><span>{n}</span></div><div><h3>{title}</h3><p>{text}</p><a href={id === "fibre" ? "/fiber" : `${WA}?text=${encodeURIComponent(`Hello Terci, I am interested in ${title}.`)}`} target={id === "fibre" ? undefined : "_blank"} rel="noreferrer">{id === "fibre" ? "Explore capability" : "Discuss this solution"} <span>↗</span></a></div></article>)}</div></section>
+
+    <section className="corp-approach" id="approach"><div className="approach-copy"><p className="eyebrow">How we deliver</p><h2>From requirement<br/>to reliable operation.</h2><p>Our role does not end when the equipment is mounted. We scope correctly, install professionally, test thoroughly and remain available when the system needs support or expansion.</p><a className="btn primary" href={`${WA}?text=Hello%20Terci%2C%20please%20help%20me%20scope%20a%20technology%20project.`} target="_blank" rel="noreferrer">Start a conversation <span>↗</span></a></div><div className="approach-steps">{[["01","Assess","Site survey, risks and requirements"],["02","Design","Clear scope and suitable technology"],["03","Deliver","Professional installation and testing"],["04","Support","Handover, maintenance and expansion"]].map(([n,t,d])=><article key={n}><span>{n}</span><div><b>{t}</b><small>{d}</small></div></article>)}</div></section>
+
+    <section className="corp-projects" id="work"><div className="corp-section-head light"><div><p className="eyebrow">Projects &amp; field capability</p><h2>Real work.<br/>Visible standards.</h2></div><p>Our portfolio demonstrates the workmanship behind the promise—from secure mounting and clean cable routes to commissioned, working systems.</p></div><div className="project-grid">{projects.map(([image,label,title,cls])=><figure className={cls} key={title}><img src={image} alt={title} loading="lazy"/><figcaption><span>{label}</span><b>{title}</b></figcaption></figure>)}</div><div className="projects-note"><span>Field installations completed across Zambia</span><a href={`${WA}?text=Hello%20Terci%2C%20I%20would%20like%20to%20see%20more%20project%20examples.`} target="_blank" rel="noreferrer">Request our company profile <b>→</b></a></div></section>
+
+    <section className="home-products corporate-products" id="products"><div className="home-products-heading"><div><p className="eyebrow">Equipment supplied by Terci</p><h2>Professional products.<br/><span>Technical support included.</span></h2></div><div><p>Selected Starlink, CCTV, networking, fibre and ICT products—available with professional installation and nationwide support.</p><a href="/shop">View the complete catalogue <span>→</span></a></div></div><FeaturedProducts/></section>
+
+    <section className="corp-coverage" id="coverage"><div className="coverage-photo"><img src="/images/client-handover.jpeg" alt="Terci project handover in Zambia" loading="lazy"/><div><small>OPERATIONAL BASE</small><b>Copperbelt</b><span>National field deployment</span></div></div><div className="coverage-content"><p className="eyebrow">Nationwide project delivery</p><h2>Rooted on the Copperbelt.<br/>Ready across Zambia.</h2><p>Our Copperbelt hub supports fast local response while our field capability extends to projects throughout all ten provinces.</p><div className="province-list">{["Copperbelt","Lusaka","Central","North-Western","Northern","Luapula","Muchinga","Eastern","Southern","Western"].map(x=><span key={x}>{x}</span>)}</div></div></section>
+
+    <section className="corp-industries"><div><p className="eyebrow">Industries we support</p><h2>Technology shaped around the environment it serves.</h2></div><div className="industry-grid">{industries.map((industry,index)=><span key={industry}><b>0{index + 1}</b>{industry}</span>)}</div></section>
+
+    <section className="corp-contact" id="contact"><div><p className="eyebrow">Start your project</p><h2>Let’s build infrastructure<br/>your organisation can rely on.</h2></div><div><p>Tell us what you need. We’ll help define the right scope and provide a clear quotation.</p><a className="btn white" href={`${WA}?text=Hello%20Terci%20Communications%2C%20I%20would%20like%20to%20discuss%20a%20project.`} target="_blank" rel="noreferrer">Chat on WhatsApp <span>↗</span></a><a href="mailto:info@terci.net">info@terci.net</a></div></section><Footer/>
   </main>;
 }
 
