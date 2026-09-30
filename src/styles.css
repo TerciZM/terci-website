@@ -176,3 +176,10 @@
 .home-shop-link a{font-size:26px;font-weight:900;line-height:1;letter-spacing:.03em;color:#111;text-decoration:none}
 .home-shop-link a:hover{color:#d41920}
 @media(max-width:620px){.home-shop-link{height:42px}.home-shop-link a{font-size:22px}}
+
+/* Multi-image product gallery */
+.product-thumbnails{display:flex;gap:7px;padding:8px 10px 2px;overflow-x:auto;background:#fff}
+.product-thumbnails button{width:48px;height:48px;flex:0 0 48px;padding:2px;border:1px solid #ddd;background:#fff;border-radius:4px;cursor:pointer}
+.product-thumbnails button.active{border:2px solid #d41920}
+.product-thumbnails img{width:100%;height:100%;object-fit:contain;display:block}
+.admin-image-count{display:inline-block;margin-top:7px;font-size:12px;font-weight:700;color:#16803a}
