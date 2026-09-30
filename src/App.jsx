@@ -303,11 +303,23 @@ async function compressProductImage(file, maxDimension = 1600, quality = 0.82) {
 function ProductForm({ product = emptyProduct, onSave, onError, busy, compact = false, categoryOptions = [] }) {
   const [values, setValues] = useState({ ...emptyProduct, ...product });
   const [images, setImages] = useState([]);
+  const existingProductImages = (item) => {
+    const urls = Array.isArray(item.imageUrls) ? item.imageUrls.filter(Boolean) : [];
+    const ids = Array.isArray(item.imageFileIds) ? item.imageFileIds.filter(Boolean) : [];
+    const names = Array.isArray(item.imageNames) ? item.imageNames.filter(Boolean) : [];
+    const count = Math.max(urls.length, ids.length, names.length, item.imageUrl || item.imageFileId ? 1 : 0);
+    return Array.from({ length: count }, (_, index) => ({
+      url: urls[index] || (index === 0 ? item.imageUrl : ""),
+      id: ids[index] || (index === 0 ? item.imageFileId : ""),
+      name: names[index] || (index === 0 ? item.imageName : "") || `Picture ${index + 1}`
+    })).filter((entry) => entry.url || entry.id || entry.name);
+  };
+  const [savedImages, setSavedImages] = useState(() => existingProductImages(product));
   const [uploading, setUploading] = useState(false);
   const standardCategories = ["Networking", "Fibre", "CCTV & Security", "Starlink", "Tools & Test Equipment", "Power & Solar", "Accessories"];
   const availableCategories = [...new Set([...standardCategories, ...categoryOptions, ...(product.category ? [product.category] : [])].filter(Boolean))].sort((a,b) => a.localeCompare(b));
   const [addingCategory, setAddingCategory] = useState(false);
-  useEffect(() => { setValues({ ...emptyProduct, ...product }); setImages([]); setAddingCategory(false); }, [product.id]);
+  useEffect(() => { setValues({ ...emptyProduct, ...product }); setImages([]); setSavedImages(existingProductImages(product)); setAddingCategory(false); }, [product.id]);
   const change = (event) => {
     const { name, value, type, checked } = event.target;
     setValues((current) => ({ ...current, [name]: type === "checkbox" ? checked : value }));
@@ -318,6 +330,14 @@ function ProductForm({ product = emptyProduct, onSave, onError, busy, compact = 
     setUploading(true);
     try {
       let next = { ...values, price: Number(values.price || 0), sortOrder: Number(values.sortOrder || 0) };
+      const keptSaved = savedImages.filter(Boolean).slice(0, 5);
+      next = {
+        ...next,
+        imageFileId: keptSaved[0]?.id || "",
+        imageName: keptSaved[0]?.name || "",
+        imageFileIds: keptSaved.map((item) => item.id).filter(Boolean),
+        imageNames: keptSaved.map((item) => item.name).filter(Boolean)
+      };
       if (images.length) {
         const uploadedImages = [];
         for (const image of images.slice(0, 5)) {
@@ -325,7 +345,9 @@ function ProductForm({ product = emptyProduct, onSave, onError, busy, compact = 
           const uploaded = await adminRequest("/admin/upload", { method: "POST", body: JSON.stringify({ fileName: compressed.name, contentType: compressed.type, data: await fileAsDataUrl(compressed) }) });
           uploadedImages.push(uploaded);
         }
-        next = { ...next, imageFileId: uploadedImages[0].imageFileId, imageName: uploadedImages[0].imageName, imageFileIds: uploadedImages.map((item) => item.imageFileId), imageNames: uploadedImages.map((item) => item.imageName) };
+        const combinedIds = [...keptSaved.map((item) => item.id).filter(Boolean), ...uploadedImages.map((item) => item.imageFileId)].slice(0,5);
+        const combinedNames = [...keptSaved.map((item) => item.name).filter(Boolean), ...uploadedImages.map((item) => item.imageName)].slice(0,5);
+        next = { ...next, imageFileId: combinedIds[0] || "", imageName: combinedNames[0] || "", imageFileIds: combinedIds, imageNames: combinedNames };
       }
       const saved = await onSave(next);
       if (saved !== false && !product.id) { setValues({ ...emptyProduct }); setImages([]); form.reset(); }
@@ -342,7 +364,7 @@ function ProductForm({ product = emptyProduct, onSave, onError, busy, compact = 
     <label>Price in ZMW<input name="price" value={values.price} onChange={change} type="number" min="0" step="0.01" placeholder="0 means Request price"/></label>
     <label>Stock status<select name="stockStatus" value={values.stockStatus} onChange={change} required><option>In stock</option><option>Available to order</option><option>Limited stock</option><option>Out of stock</option></select></label>
     <label>Display order<input name="sortOrder" value={values.sortOrder} onChange={change} type="number" step="1"/></label>
-    <div className="product-picture-fields wide"><b>Product pictures</b><small>Upload up to 5 pictures. Picture 1 is the main catalogue image. Photos are automatically resized and compressed to WebP before upload.</small><div className="picture-slot-grid">{[0,1,2,3,4].map((index) => <label className="file-input picture-slot" key={index}><span>{index === 0 ? "Picture 1 · Main" : `Picture ${index + 1}`}</span><input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => { const file = event.target.files?.[0] || null; setImages((current) => { const next = [...current]; if (file) next[index] = file; else next.splice(index,1); return next.filter(Boolean).slice(0,5); }); }}/><small>{images[index]?.name || "Choose JPG, PNG, WebP or GIF"}</small>{images[index] && <button type="button" className="remove-picture" onClick={(event) => { event.preventDefault(); event.stopPropagation(); setImages((current) => { const next = [...current]; next[index] = undefined; return next; }); }}>Remove</button>}</label>)}</div>{images.length > 0 && <span className="admin-image-count">{images.length} picture{images.length === 1 ? "" : "s"} selected</span>}</div>
+    <div className="product-picture-fields wide"><b>Product pictures</b>{product.id && savedImages.length > 0 && <div className="saved-picture-list">{savedImages.map((item,index) => <div className="saved-picture-item" key={(item.id || item.url || item.name) + index}>{item.url && <img src={item.url} alt={`${product.name} picture ${index + 1}`}/>}<span>{index === 0 ? "Current main picture" : `Current picture ${index + 1}`}</span><button type="button" className="remove-picture" onClick={() => setSavedImages((current) => current.filter((_,itemIndex) => itemIndex !== index))}>Remove</button></div>)}</div><small>Upload up to 5 pictures. Picture 1 is the main catalogue image. Photos are automatically resized and compressed to WebP before upload.</small><div className="picture-slot-grid">{[0,1,2,3,4].map((index) => <label className="file-input picture-slot" key={index}><span>{index === 0 ? "Picture 1 · Main" : `Picture ${index + 1}`}</span><input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => { const file = event.target.files?.[0] || null; setImages((current) => { const next = [...current]; if (file) next[index] = file; else next.splice(index,1); return next.filter(Boolean).slice(0,5); }); }}/><small>{images[index]?.name || "Choose JPG, PNG, WebP or GIF"}</small>{images[index] && <button type="button" className="remove-picture" onClick={(event) => { event.preventDefault(); event.stopPropagation(); setImages((current) => { const next = [...current]; next[index] = undefined; return next; }); }}>Remove</button>}</label>)}</div>{images.length > 0 && <span className="admin-image-count">{images.length} picture{images.length === 1 ? "" : "s"} selected</span>}</div>
     <label className="feature-check"><input name="isActive" type="checkbox" checked={values.isActive} onChange={change}/><span><b>Visible in catalogue</b><small>Turn this off to hide the product.</small></span></label>
     <label className="feature-check"><input name="isFeatured" type="checkbox" checked={values.isFeatured} onChange={change}/><span><b>Feature on homepage</b><small>Show this item in the home product section.</small></span></label>
     <button disabled={busy || uploading} type="submit"><span>{busy || uploading ? "Saving…" : product.id ? "Save changes" : "Add product"}</span><span>→</span></button>
