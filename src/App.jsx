@@ -31,6 +31,36 @@ const categories = [
   ["Business technology", "Practical ICT equipment selected for Zambian homes, offices and field sites.", "/images/client-handover.jpeg"],
 ];
 
+
+const shopSeedProducts = [
+  ["cat6-rj45","CAT6 RJ45 Plug","Networking","CAT6 modular connector for structured network cabling.",3],
+  ["cat6-pass-through","CAT6 Pass-through RJ45 Plug","Networking","Pass-through CAT6 connector for faster termination and conductor checks.",5],
+  ["rj45-boot","RJ45 Boot","Networking","Protective strain-relief boot for RJ45 network connectors.",4],
+  ["cat6-keystone","CAT6 Keystone Jack","Networking","CAT6 UTP keystone jack for faceplates, boxes and patching points.",35],
+  ["faceplate-1","1-Port Faceplate","Networking","Single-port data faceplate for clean network outlet installations.",25],
+  ["faceplate-2","2-Port Faceplate","Networking","Dual-port data faceplate for structured cabling outlets.",35],
+  ["surface-box","Surface Mount Box","Networking","Surface-mount box for network and data outlet installations.",30],
+  ["rj45-coupler","RJ45 Coupler","Networking","Female-to-female RJ45 coupler for joining Ethernet patch leads.",35],
+  ["patch-1m","CAT6 Patch Cord – 1m","Networking","CAT6 Ethernet patch lead for racks, desks and network equipment.",55],
+  ["patch-2m","CAT6 Patch Cord – 2m","Networking","CAT6 Ethernet patch lead for racks, desks and network equipment.",65],
+  ["patch-3m","CAT6 Patch Cord – 3m","Networking","CAT6 Ethernet patch lead for racks, desks and network equipment.",75],
+  ["patch-panel-24","24-Port CAT6 Patch Panel","Networking","24-port CAT6 patch panel for structured cabling racks and cabinets.",950],
+  ["crimp-tool","RJ45 Crimping Tool","Tools & Test Equipment","Hand crimping tool for terminating RJ45 network connectors.",400],
+  ["network-tester","Network Cable Tester","Tools & Test Equipment","Basic LAN cable tester for continuity and wire-map checks.",750],
+  ["cable-ties","Cable Ties","Accessories","General-purpose cable ties for neat cable management.",50],
+  ["velcro-ties","Velcro Cable Ties","Accessories","Reusable hook-and-loop ties for network and fibre cable management.",100],
+  ["cage-nuts","Cage Nuts + Screws","Accessories","Rack mounting hardware for switches, patch panels and accessories.",5],
+  ["sc-pigtail","SC/UPC Pigtail 1m","Fibre","Single-mode SC/UPC fibre pigtail for splicing and termination.",30],
+  ["sc-lc-patch","SC/UPC–LC/UPC Patch Cord","Fibre","Single-mode fibre patch cord for equipment and ODF interconnection.",120],
+  ["splice-sleeve","60mm Fibre Splice Sleeve","Fibre","Heat-shrink protection sleeve for fusion-spliced fibre joints.",3],
+].map(([id,name,category,description,price], index) => ({
+  id, name, category, description, price,
+  stockStatus: "Available on Order",
+  isActive: true,
+  isFeatured: index < 4,
+  estimated: true,
+}));
+
 const heroSlides = [
   {
     image: "/images/hero-starlink-installation.webp",
@@ -78,9 +108,9 @@ function Header({ active = "home" }) {
         <a href="/" aria-current={active === "home" ? "page" : undefined}>Home</a>
         <div className="nav-item"><a href="/#about">About <span>⌄</span></a><div className="nav-panel about-panel"><a href="/#about"><b>Who we are</b><small>A Zambian technology partner</small></a><a href="/#approach"><b>Our approach</b><small>Plan · Deliver · Support</small></a><a href="/#coverage"><b>Where we work</b><small>Copperbelt hub, national reach</small></a></div></div>
         <div className="nav-item"><a href="/#services">Solutions <span>⌄</span></a><div className="nav-panel solutions-panel"><a href="/#starlink"><b>Starlink &amp; Internet</b><small>Reliable connectivity</small></a><a href="/#security"><b>CCTV &amp; Security</b><small>Integrated protection</small></a><a href="/fiber"><b>Fibre Infrastructure</b><small>Design, splice and test</small></a><a href="/#networking"><b>Networks &amp; Wi-Fi</b><small>Business-ready coverage</small></a><a href="/#voice"><b>Voice &amp; Collaboration</b><small>PBX and enterprise voice</small></a><a href="/#power"><b>Electrical &amp; Solar</b><small>Resilient ICT power</small></a></div></div>
-        <a href="/shop" aria-current={active === "shop" ? "page" : undefined}>Products</a><a href="/#work">Projects</a><a href="/#coverage">Coverage</a><a href="/#contact">Contact</a>
+        <a href="/shop" aria-current={active === "shop" ? "page" : undefined}>Shop</a><a href="/#work">Projects</a><a href="/#coverage">Coverage</a><a href="/#contact">Contact</a>
       </nav>
-      <details className="mobile-nav"><summary aria-label="Open navigation">Menu</summary><div><a href="/">Home</a><a href="/#about">About</a><a href="/#services">Solutions</a><a href="/fiber">Fibre</a><a href="/shop">Products</a><a href="/#work">Projects</a><a href="/#coverage">Coverage</a><a href="/#contact">Contact</a></div></details>
+      <details className="mobile-nav"><summary aria-label="Open navigation">Menu</summary><div><a href="/">Home</a><a href="/#about">About</a><a href="/#services">Solutions</a><a href="/fiber">Fibre</a><a href="/shop">Shop</a><a href="/#work">Projects</a><a href="/#coverage">Coverage</a><a href="/#contact">Contact</a></div></details>
       <a className="header-cta" href={`${WA}?text=Hello%20Terci%20Communications%2C%20I%20would%20like%20a%20quotation.`} target="_blank" rel="noreferrer">Request a quotation <span>↗</span></a>
     </header>
   </>;
@@ -109,7 +139,7 @@ function ProductCard({ product }) {
   const enquire = () => fetch(`${API}/enquiries/${product.id}`, { method: "POST" }).catch(() => {});
   return <article className="product-card">
     <div className="product-image"><img src={product.imageUrl || categoryFallback(product.category)} alt={product.name}/><span>{product.stockStatus || "Ask for availability"}</span></div>
-    <div className="product-copy"><small>{product.category || "TERCI SUPPLY"}</small><h3>{product.name}</h3><p>{product.description || "Contact our team for specifications, availability and installation support."}</p><div><b>{Number(product.price) > 0 ? `K${Number(product.price).toLocaleString("en-ZM", { maximumFractionDigits: 2 })}` : "Request price"}</b><a href={`${WA}?text=${encodeURIComponent(`Hello Terci, I am interested in ${product.name}.`)}`} onClick={enquire} target="_blank" rel="noreferrer">Enquire on WhatsApp <span>↗</span></a></div></div>
+    <div className="product-copy"><small>{product.category || "TERCI SUPPLY"}</small><h3>{product.name}</h3><p>{product.description || "Contact our team for specifications, availability and installation support."}</p>{product.estimated && <span className="estimate-note">Estimated price · confirm on order</span>}<div><b>{Number(product.price) > 0 ? `${product.estimated ? "From " : ""}K${Number(product.price).toLocaleString("en-ZM", { maximumFractionDigits: 2 })}` : "Request price"}</b><a href={`${WA}?text=${encodeURIComponent(`Hello Terci, I am interested in ${product.name}. Please confirm the current price and availability.`)}`} onClick={enquire} target="_blank" rel="noreferrer">Order on WhatsApp <span>↗</span></a></div></div>
   </article>;
 }
 
@@ -137,9 +167,15 @@ function FeaturedProducts() {
 
 function PublicCatalogue() {
   const { loading, products } = usePublicProducts();
-  if (loading) return <div className="empty-catalog"><b>Loading the Terci catalogue…</b><p>Please wait while we fetch the latest products.</p></div>;
-  if (!products.length) return <CategoryProducts/>;
-  return <div className="product-grid">{products.map((product) => <ProductCard product={product} key={product.id}/>)}</div>;
+  const catalogue = products.length ? products : shopSeedProducts;
+  const [filter, setFilter] = useState("All");
+  const filters = ["All", ...new Set(catalogue.map((product) => product.category).filter(Boolean))];
+  const visible = filter === "All" ? catalogue : catalogue.filter((product) => product.category === filter);
+  return <div className="catalogue-wrap">
+    <div className="shop-filters" aria-label="Shop categories">{filters.map((name) => <button className={filter === name ? "active" : ""} onClick={() => setFilter(name)} key={name}>{name}</button>)}</div>
+    {!products.length && !loading && <p className="catalogue-status">Starter catalogue shown with estimated prices. Current price and availability are confirmed when you order.</p>}
+    <div className="product-grid">{visible.map((product) => <ProductCard product={product} key={product.id}/>)}</div>
+  </div>;
 }
 
 function Home() {
@@ -176,7 +212,7 @@ function Home() {
 }
 
 function Shop() {
-  return <main className="shop-page"><Header active="shop"/><section className="shop-hero"><div><p className="eyebrow">Terci equipment catalogue</p><h1>Technology selected for <em>real-world use.</em></h1><p>Browse connectivity, security, fibre and networking products supplied by Terci Communications. Ask our team for pricing, delivery and installation anywhere in Zambia.</p></div><div className="shop-orbit" aria-hidden="true"><span>STARLINK</span><span>CCTV</span><span>FIBRE</span><span>NETWORKING</span><b>TERCI<br/>SUPPLY</b></div></section><section className="shop-listing"><div className="shop-title"><div><p className="eyebrow">What we supply</p><h2>Equipment for your next project.</h2></div><p>The catalogue is managed securely from the Terci admin dashboard. When a product has no picture, a matching generic category image is used.</p></div><PublicCatalogue/></section><section className="shop-support"><p className="eyebrow">More than a product</p><h2>Supply, installation and support—from one team.</h2><p>Terci can help you select the right equipment, install it professionally and support it after commissioning.</p><a className="btn white" href={`${WA}?text=Hello%20Terci%2C%20please%20help%20me%20scope%20an%20equipment%20and%20installation%20requirement.`} target="_blank" rel="noreferrer">Discuss your requirement <span>↗</span></a></section><Footer/></main>;
+  return <main className="shop-page"><Header active="shop"/><section className="shop-hero"><div><p className="eyebrow">Terci shop</p><h1>Technology selected for <em>real-world use.</em></h1><p>Browse networking, fibre, tools and technology supplied by Terci Communications. Estimated prices are confirmed when you order, with delivery and installation support available.</p></div><div className="shop-orbit" aria-hidden="true"><span>STARLINK</span><span>CCTV</span><span>FIBRE</span><span>NETWORKING</span><b>TERCI<br/>SUPPLY</b></div></section><section className="shop-listing"><div className="shop-title"><div><p className="eyebrow">What we supply</p><h2>Equipment for your next project.</h2></div><p>Start with our networking and fibre essentials, then order directly on WhatsApp. Items not yet physically stocked are clearly marked Available on Order.</p></div><PublicCatalogue/></section><section className="shop-support"><p className="eyebrow">More than a product</p><h2>Supply, installation and support—from one team.</h2><p>Terci can help you select the right equipment, install it professionally and support it after commissioning.</p><a className="btn white" href={`${WA}?text=Hello%20Terci%2C%20please%20help%20me%20scope%20an%20equipment%20and%20installation%20requirement.`} target="_blank" rel="noreferrer">Discuss your requirement <span>↗</span></a></section><Footer/></main>;
 }
 
 function Fiber() {
