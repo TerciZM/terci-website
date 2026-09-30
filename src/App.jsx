@@ -278,6 +278,28 @@ function fileAsDataUrl(file) {
   });
 }
 
+async function compressProductImage(file, maxDimension = 1600, quality = 0.82) {
+  if (!file?.type?.startsWith("image/") || file.type === "image/gif") return file;
+  try {
+    const bitmap = await createImageBitmap(file);
+    const scale = Math.min(1, maxDimension / Math.max(bitmap.width, bitmap.height));
+    const width = Math.max(1, Math.round(bitmap.width * scale));
+    const height = Math.max(1, Math.round(bitmap.height * scale));
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    const context = canvas.getContext("2d");
+    context.drawImage(bitmap, 0, 0, width, height);
+    bitmap.close?.();
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/webp", quality));
+    if (!blob) return file;
+    const baseName = file.name.replace(/\.[^.]+$/, "");
+    return new File([blob], `${baseName}.webp`, { type: "image/webp", lastModified: Date.now() });
+  } catch {
+    return file;
+  }
+}
+
 function ProductForm({ product = emptyProduct, onSave, onError, busy, compact = false, categoryOptions = [] }) {
   const [values, setValues] = useState({ ...emptyProduct, ...product });
   const [images, setImages] = useState([]);
@@ -299,7 +321,8 @@ function ProductForm({ product = emptyProduct, onSave, onError, busy, compact = 
       if (images.length) {
         const uploadedImages = [];
         for (const image of images.slice(0, 5)) {
-          const uploaded = await adminRequest("/admin/upload", { method: "POST", body: JSON.stringify({ fileName: image.name, contentType: image.type, data: await fileAsDataUrl(image) }) });
+          const compressed = await compressProductImage(image);
+          const uploaded = await adminRequest("/admin/upload", { method: "POST", body: JSON.stringify({ fileName: compressed.name, contentType: compressed.type, data: await fileAsDataUrl(compressed) }) });
           uploadedImages.push(uploaded);
         }
         next = { ...next, imageFileId: uploadedImages[0].imageFileId, imageName: uploadedImages[0].imageName, imageFileIds: uploadedImages.map((item) => item.imageFileId), imageNames: uploadedImages.map((item) => item.imageName) };
@@ -319,7 +342,7 @@ function ProductForm({ product = emptyProduct, onSave, onError, busy, compact = 
     <label>Price in ZMW<input name="price" value={values.price} onChange={change} type="number" min="0" step="0.01" placeholder="0 means Request price"/></label>
     <label>Stock status<select name="stockStatus" value={values.stockStatus} onChange={change} required><option>In stock</option><option>Available to order</option><option>Limited stock</option><option>Out of stock</option></select></label>
     <label>Display order<input name="sortOrder" value={values.sortOrder} onChange={change} type="number" step="1"/></label>
-    <div className="product-picture-fields wide"><b>Product pictures</b><small>Upload up to 5 pictures. Picture 1 is the main catalogue image.</small><div className="picture-slot-grid">{[0,1,2,3,4].map((index) => <label className="file-input picture-slot" key={index}><span>{index === 0 ? "Picture 1 · Main" : `Picture ${index + 1}`}</span><input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => { const file = event.target.files?.[0] || null; setImages((current) => { const next = [...current]; if (file) next[index] = file; else next.splice(index,1); return next.filter(Boolean).slice(0,5); }); }}/><small>{images[index]?.name || "Choose JPG, PNG, WebP or GIF"}</small></label>)}</div>{images.length > 0 && <span className="admin-image-count">{images.length} picture{images.length === 1 ? "" : "s"} selected</span>}</div>
+    <div className="product-picture-fields wide"><b>Product pictures</b><small>Upload up to 5 pictures. Picture 1 is the main catalogue image. Photos are automatically resized and compressed to WebP before upload.</small><div className="picture-slot-grid">{[0,1,2,3,4].map((index) => <label className="file-input picture-slot" key={index}><span>{index === 0 ? "Picture 1 · Main" : `Picture ${index + 1}`}</span><input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => { const file = event.target.files?.[0] || null; setImages((current) => { const next = [...current]; if (file) next[index] = file; else next.splice(index,1); return next.filter(Boolean).slice(0,5); }); }}/><small>{images[index]?.name || "Choose JPG, PNG, WebP or GIF"}</small></label>)}</div>{images.length > 0 && <span className="admin-image-count">{images.length} picture{images.length === 1 ? "" : "s"} selected</span>}</div>
     <label className="feature-check"><input name="isActive" type="checkbox" checked={values.isActive} onChange={change}/><span><b>Visible in catalogue</b><small>Turn this off to hide the product.</small></span></label>
     <label className="feature-check"><input name="isFeatured" type="checkbox" checked={values.isFeatured} onChange={change}/><span><b>Feature on homepage</b><small>Show this item in the home product section.</small></span></label>
     <button disabled={busy || uploading} type="submit"><span>{busy || uploading ? "Saving…" : product.id ? "Save changes" : "Add product"}</span><span>→</span></button>
