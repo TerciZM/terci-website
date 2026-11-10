@@ -1,28 +1,26 @@
-# Terci Communications corporate website
+# Terci Market and Terci Communications website
 
-Catalyst Slate front-end for Terci Communications Limited. The public site uses
-a corporate, image-led layout with solution, project, coverage and industry
-sections, while retaining the live catalogue and protected product dashboard.
+The homepage is the Terci Market storefront. Product details, visible Kwacha prices, search, categories, a persistent basket and WhatsApp checkout are available from the shop. Product data and real prices come from the existing Terci catalogue API and admin dashboard.
 
-## Catalyst Slate settings
+## Pages
+
+- `/` — storefront and product catalogue
+- `/about` — company profile, services, projects, coverage and contact details
+- `/fiber` — fibre infrastructure service page
+- `/admin` — protected product catalogue dashboard
+- `/shop` — legacy storefront path
+
+The basket is stored in the customer's browser. WhatsApp checkout sends the selected products and priced-items subtotal to Terci; availability, delivery and final total are confirmed with the team.
+
+## Preview-only sample listings
+
+The repository contains optional sample product cards for layout previews. They appear only when `VITE_TERCI_DEMO_PRODUCTS=true` is set at build time, and are visibly marked as sample prices. Production builds should leave this variable unset so only catalogue products are shown.
+
+## Catalyst build settings
 
 - Framework: Vite
 - Root path: `./`
-- Branch: `main`
 - Build command: `npm run build`
 - Output directory: `dist`
 
-## Live pages
-
-- `/` — public Terci website with featured products
-- `/shop` — live product catalogue
-- `/fiber` — fibre service page
-- `/admin` — protected product dashboard
-
-The dashboard uses Zoho Catalyst Hosted Authentication and the
-`terci_admin_api` Advanced I/O function. Sign in with the confirmed
-`App Administrator` account, return to `/admin`, and select
-**I have signed in — retry**.
-
-The dashboard can add and edit products, upload pictures, feature items on the
-homepage, hide catalogue entries, and display product/enquiry statistics.
+The protected product dashboard uses Zoho Catalyst Hosted Authentication and the `terci_admin_api` Advanced I/O function.

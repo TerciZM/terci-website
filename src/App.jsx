@@ -32,6 +32,8 @@ const categories = [
 ];
 
 
+const PREVIEW_DEMO_MODE = import.meta.env.VITE_TERCI_DEMO_PRODUCTS === "true";
+
 const shopSeedProducts = [
   ["cat6-rj45","CAT6 RJ45 Plug","Networking","CAT6 modular connector for structured network cabling.",3,"In Stock","/images/outdoor-ap.jpeg","BEST SELLER"],
   ["cat6-pass-through","CAT6 Pass-through RJ45 Plug","Networking","Pass-through CAT6 connector for faster termination.",5,"In Stock","/images/outdoor-ap.jpeg","POPULAR"],
@@ -105,27 +107,24 @@ const serviceImages = {
 
 const industries = ["Mining & industrial", "Financial services", "Retail & hospitality", "Education", "Healthcare", "Homes & estates"];
 
-function Header({ active = "home" }) {
+function Header({ active = "shop" }) {
   return <>
-    <div className="topline"><div><a href="tel:+260972888575">+260 972 888 575</a><a href="mailto:info@terci.net">info@terci.net</a></div><div><span>Kitwe, Zambia</span><span>Nationwide project delivery</span></div></div>
+    <div className="topline"><div><a href="tel:+260972888575">+260 972 888 575</a><a href="mailto:info@terci.net">info@terci.net</a></div><div><span>Kitwe, Zambia</span><span>Nationwide delivery</span></div></div>
     <header className="site-header corporate-header">
-      <a className="brand" href="/" aria-label="Terci Communications home"><img src="/images/terci-mark.png" alt=""/><span><strong>TERCI</strong><small>COMMUNICATIONS LIMITED</small></span></a>
+      <a className="brand" href="/" aria-label="Terci Market home"><img src="/images/terci-mark.png" alt=""/><span><strong>TERCI</strong><small>MARKET</small></span></a>
       <nav className="main-nav corporate-nav" aria-label="Main navigation">
-        <a href="/" aria-current={active === "home" ? "page" : undefined}>Home</a>
-        <div className="nav-item"><a href="/#about">About <span>⌄</span></a><div className="nav-panel about-panel"><a href="/#about"><b>Who we are</b><small>A Zambian technology partner</small></a><a href="/#approach"><b>Our approach</b><small>Plan · Deliver · Support</small></a><a href="/#coverage"><b>Where we work</b><small>Copperbelt hub, national reach</small></a></div></div>
-        <div className="nav-item"><a href="/#services">Solutions <span>⌄</span></a><div className="nav-panel solutions-panel"><a href="/#starlink"><b>Starlink &amp; Internet</b><small>Reliable connectivity</small></a><a href="/#security"><b>CCTV &amp; Security</b><small>Integrated protection</small></a><a href="/fiber"><b>Fibre Infrastructure</b><small>Design, splice and test</small></a><a href="/#networking"><b>Networks &amp; Wi-Fi</b><small>Business-ready coverage</small></a><a href="/#voice"><b>Voice &amp; Collaboration</b><small>PBX and enterprise voice</small></a><a href="/#power"><b>Electrical &amp; Solar</b><small>Resilient ICT power</small></a></div></div>
-        <a href="/#work">Projects</a><a href="/#coverage">Coverage</a><a href="/#contact">Contact</a>
+        <a href="/" aria-current={active === "shop" ? "page" : undefined}>Shop</a>
+        <a href="/about" aria-current={active === "about" ? "page" : undefined}>About Terci</a>
+        <a href="/about#services">Services</a><a href="/about#work">Projects</a><a href="/about#contact">Contact</a>
       </nav>
-      <details className="mobile-nav"><summary aria-label="Open navigation">Menu</summary><div><a href="/">Home</a><a href="/#about">About</a><a href="/#services">Solutions</a><a href="/fiber">Fibre</a><a href="/#work">Projects</a><a href="/#coverage">Coverage</a><a href="/#contact">Contact</a><a className="mobile-shop-link" href="/shop">Shop</a></div></details>
-      <a className="header-cta" href={`${WA}?text=Hello%20Terci%20Communications%2C%20I%20would%20like%20a%20quotation.`} target="_blank" rel="noreferrer">Request a quotation <span>↗</span></a>
+      <details className="mobile-nav"><summary aria-label="Open navigation">Menu</summary><div><a href="/">Shop</a><a href="/about">About Terci</a><a href="/about#services">Services</a><a href="/about#work">Projects</a><a href="/about#contact">Contact</a></div></details>
+      <a className="header-cta" href={WA + "?text=Hello%20Terci%2C%20I%20need%20help%20with%20a%20product."} target="_blank" rel="noreferrer">WhatsApp Terci <span>↗</span></a>
     </header>
   </>;
 }
-
 function Footer() {
-  return <><footer className="corporate-footer"><div className="footer-intro"><a className="brand footer-brand" href="/"><img src="/images/terci-mark.png" alt=""/><span><strong>TERCI</strong><small>COMMUNICATIONS LIMITED</small></span></a><p>Integrated security, connectivity and ICT infrastructure for organisations across Zambia.</p></div><div className="footer-column"><b>Company</b><a href="/#about">About Terci</a><a href="/#work">Projects</a><a href="/#coverage">Coverage</a><a href="/#contact">Contact</a></div><div className="footer-column"><b>Solutions</b><a href="/#starlink">Starlink &amp; Internet</a><a href="/#security">CCTV &amp; Security</a><a href="/fiber">Fibre Infrastructure</a><a href="/#networking">Networks &amp; Wi-Fi</a></div><div className="footer-column footer-contact"><b>Talk to our team</b><a href="mailto:info@terci.net">info@terci.net</a><a href="tel:+260972888575">+260 972 888 575</a><span>Kitwe, Zambia</span></div><div className="footer-bottom"><small>© 2026 Terci Communications Limited. All rights reserved.</small><span>Integrated Security &amp; Connectivity Solutions</span></div></footer><a className="floating-wa" href={WA} target="_blank" rel="noreferrer" aria-label="Contact Terci on WhatsApp">WA</a></>;
+  return <><footer className="corporate-footer"><div className="footer-intro"><a className="brand footer-brand" href="/"><img src="/images/terci-mark.png" alt=""/><span><strong>TERCI</strong><small>COMMUNICATIONS LIMITED</small></span></a><p>Trusted technology, products and technical support from a Zambian team.</p></div><div className="footer-column"><b>Company</b><a href="/about">About Terci</a><a href="/about#work">Projects</a><a href="/about#coverage">Coverage</a><a href="/about#contact">Contact</a></div><div className="footer-column"><b>Shop</b><a href="/">Browse products</a><a href="/#catalogue">Product categories</a><a href="/about#services">Installation services</a></div><div className="footer-column footer-contact"><b>Talk to our team</b><a href="mailto:info@terci.net">info@terci.net</a><a href="tel:+260972888575">+260 972 888 575</a><span>Kitwe, Zambia</span></div><div className="footer-bottom"><small>© 2026 Terci Communications Limited. All rights reserved.</small><span>Trusted products · Local support</span></div></footer><a className="floating-wa" href={WA} target="_blank" rel="noreferrer" aria-label="Contact Terci on WhatsApp">WA</a></>;
 }
-
 function CategoryProducts({ compact = false }) {
   const shown = compact ? categories.slice(0, 4) : categories;
   return <div className={compact ? "category-image-grid" : "product-grid"}>{shown.map(([name, description, image]) => compact ? <a href="/shop" key={name}><img src={image} alt={name}/><span>{name}</span></a> : <article className="product-card" key={name}><div className="product-image"><img src={image} alt={name}/><span>Ask for availability</span></div><div className="product-copy"><small>TERCI SUPPLY</small><h3>{name}</h3><p>{description}</p><div><b>Request price</b><a href={`${WA}?text=${encodeURIComponent(`Hello Terci, I am interested in ${name}.`)}`} target="_blank" rel="noreferrer">Enquire on WhatsApp <span>↗</span></a></div></div></article>)}</div>;
@@ -158,11 +157,15 @@ function usePublicProducts() {
   const [state, setState] = useState({ loading: true, products: [] });
   useEffect(() => {
     let live = true;
-    fetch(`${API}/products`).then((response) => {
+    const useCatalogue = (products) => {
+      const clean = Array.isArray(products) ? products : [];
+      return PREVIEW_DEMO_MODE && clean.length === 0 ? shopSeedProducts : clean;
+    };
+    fetch(API + "/products").then((response) => {
       if (!response.ok) throw new Error("Catalogue unavailable");
       return response.json();
-    }).then((data) => live && setState({ loading: false, products: data.products || [] }))
-      .catch(() => live && setState({ loading: false, products: [] }));
+    }).then((data) => live && setState({ loading: false, products: useCatalogue(data.products) }))
+      .catch(() => live && setState({ loading: false, products: PREVIEW_DEMO_MODE ? shopSeedProducts : [] }));
     return () => { live = false; };
   }, []);
   return state;
@@ -208,7 +211,7 @@ function Home() {
     return () => window.clearInterval(timer);
   }, []);
   const current = heroSlides[slide];
-  return <main className="home-corporate"><Header/><div className="home-shop-link"><a href="/shop">SHOP</a></div>
+  return <main className="home-corporate"><Header active="about"/>
     <section className="corp-hero" id="home">
       <div className="corp-hero-images" aria-hidden="true">{heroSlides.map((item, index) => <img className={index === slide ? "active" : ""} src={item.image} alt="" key={item.image}/>)}</div><div className="corp-hero-shade"/>
       <div className="corp-hero-content"><p className="eyebrow">{current.kicker}</p><h1>{current.title[0]}<span>{current.title[1]}</span></h1><p>{current.text}</p><div className="hero-actions"><a className="btn primary" href={`${WA}?text=Hello%20Terci%20Communications%2C%20I%20would%20like%20to%20discuss%20a%20project.`} target="_blank" rel="noreferrer">Talk to our team <span>↗</span></a><a className="btn glass" href="#services">Explore our solutions <span>↓</span></a></div></div>
@@ -224,7 +227,7 @@ function Home() {
 
     <section className="corp-projects" id="work"><div className="corp-section-head light"><div><p className="eyebrow">Projects &amp; field capability</p><h2>Real work.<br/>Visible standards.</h2></div><p>Our portfolio demonstrates the workmanship behind the promise—from secure mounting and clean cable routes to commissioned, working systems.</p></div><div className="project-grid">{projects.map(([image,label,title,cls])=><figure className={cls} key={title}><img src={image} alt={title} loading="lazy"/><figcaption><span>{label}</span><b>{title}</b></figcaption></figure>)}</div><div className="projects-note"><span>Field installations completed across Zambia</span><a href={`${WA}?text=Hello%20Terci%2C%20I%20would%20like%20to%20see%20more%20project%20examples.`} target="_blank" rel="noreferrer">Request our company profile <b>→</b></a></div></section>
 
-    <section className="home-products corporate-products" id="products"><div className="home-products-heading"><div><p className="eyebrow">Equipment supplied by Terci</p><h2>Professional products.<br/><span>Technical support included.</span></h2></div><div><p>Selected Starlink, CCTV, networking, fibre and ICT products—available with professional installation and nationwide support.</p><a href="/shop">View the complete catalogue <span>→</span></a></div></div><FeaturedProducts/></section>
+    <section className="corp-shop-link" id="products"><div><p className="eyebrow">Looking for equipment?</p><h2>Browse Terci products and pricing.</h2></div><a className="btn primary" href="/">Shop equipment <span>→</span></a></section>
 
     <section className="corp-coverage" id="coverage"><div className="coverage-photo"><img src="/images/client-handover.jpeg" alt="Terci project handover in Zambia" loading="lazy"/><div><small>OPERATIONAL BASE</small><b>Copperbelt</b><span>National field deployment</span></div></div><div className="coverage-content"><p className="eyebrow">Nationwide project delivery</p><h2>Rooted on the Copperbelt.<br/>Ready across Zambia.</h2><p>Our Copperbelt hub supports fast local response while our field capability extends to projects throughout all ten provinces.</p><div className="province-list">{["Copperbelt","Lusaka","Central","North-Western","Northern","Luapula","Muchinga","Eastern","Southern","Western"].map(x=><span key={x}>{x}</span>)}</div></div></section>
 
@@ -247,6 +250,110 @@ function Shop() {
 function Fiber() {
   const capabilities = [["01","Fibre network design","Route planning, cable selection, termination design and bills of quantities for dependable deployments."],["02","Fusion splicing","Low-loss fibre joining, pigtail termination, closures, ODFs and patch-panel commissioning."],["03","OTDR & power testing","Trace analysis, loss measurement, fault location and clear test results for handover."],["04","Aerial & underground builds","ADSS aerial routes, duct installations, campus backbones and building-to-building links."],["05","Emergency fibre repair","Fault finding, cable restoration and service recovery for damaged or degraded links."],["06","Maintenance & expansion","Preventive checks, documentation, core extensions and upgrades as your network grows."]];
   return <main className="fiber-page"><Header active="fiber"/><section className="fiber-hero"><div className="fiber-copy"><a className="back-link" href="/">← All services</a><p className="eyebrow">Fibre optic infrastructure · Across Zambia</p><h1>Fast networks start with <em>strong fibre.</em></h1><p>From route design and cable deployment to fusion splicing, OTDR testing and emergency repairs, Terci delivers fibre infrastructure built for uptime—wherever your Zambian project is located.</p><div className="hero-actions"><a className="btn primary" href={`${WA}?text=Hello%20Terci%2C%20I%20would%20like%20a%20site%20survey%20for%20a%20fibre%20optic%20installation.`} target="_blank" rel="noreferrer">Book a site survey <span>↗</span></a><a className="btn dark-outline" href="tel:+260972888575">Call our team</a></div></div><div className="fiber-art"><div className="fiber-glow"/><div className="strand s1"/><div className="strand s2"/><div className="strand s3"/><div className="strand s4"/><div className="fiber-terminal"><span>LINK STATUS</span><b>READY</b><small>Design · Splice · Test · Support</small></div></div></section><section className="fiber-proof"><span><b>Single &amp; multimode</b> fibre systems</span><span><b>OTDR-tested</b> commissioning</span><span><b>End-to-end</b> documentation</span><span><b>Nationwide</b> project deployment</span></section><section className="fiber-project-proof"><div className="cabinet-photo"><img src="/images/fibre-cabinet.JPG" alt="Fibre termination and network distribution cabinet completed by Terci Communications"/><span>Completed work</span></div><div><p className="eyebrow">Practical integration</p><h2>Fibre that connects cleanly into your network.</h2><p>Good fibre work does not end at the cable. We terminate, patch, organise and integrate fibre links with the active network equipment and protected power systems that keep the service usable.</p><ul><li>Fibre termination and patching</li><li>ODF and cabinet integration</li><li>Network-switch connectivity</li><li>Labelling and handover documentation</li></ul></div></section><section className="fiber-capabilities"><div className="fiber-section-head"><div><p className="eyebrow">Complete fibre services</p><h2>From the first metre<br/>to the final test.</h2></div><p>We support new deployments, extensions, restoration work and ongoing maintenance for business-critical networks.</p></div><div className="fiber-grid">{capabilities.map(([n,t,d])=><article key={t}><span>{n}</span><h3>{t}</h3><p>{d}</p></article>)}</div></section><section className="fiber-industries"><div><p className="eyebrow">Built for demanding environments</p><h2>Fibre for Zambia’s growing economy.</h2><p>Reliable backbones for mines and contractors, warehouses, schools, hospitals, offices, estates, CCTV networks and multi-building sites.</p><a href={`${WA}?text=Hello%20Terci%2C%20please%20help%20me%20scope%20a%20fibre%20project.`} target="_blank" rel="noreferrer">Discuss your requirement →</a></div><div className="industry-list">{["Mining & contractors","Commercial offices","Schools & institutions","Warehouses & plants","CCTV backbones","Residential estates"].map(x=><span key={x}>{x}</span>)}</div></section><section className="fiber-cta" id="contact"><p>Need a new link, extension or urgent repair?</p><h2>Let’s scope your fibre project.</h2><div><a className="btn white" href={`${WA}?text=Hello%20Terci%2C%20I%20need%20help%20with%20a%20fibre%20optic%20project.`} target="_blank" rel="noreferrer">WhatsApp our fibre team <span>↗</span></a><a href="mailto:info@terci.net">info@terci.net</a></div></section><Footer/></main>;
+}
+
+const marketCategories = [
+  ["All", "✨"],
+  ["Networking", "📶"],
+  ["Fibre", "🧵"],
+  ["CCTV & Security", "📹"],
+  ["Starlink", "🛰️"],
+  ["Tools & Test Equipment", "🧰"],
+  ["Power & Solar", "🔋"],
+];
+const money = (value) => "K" + Number(value || 0).toLocaleString("en-ZM", { maximumFractionDigits: 2 });
+const categoryMatches = (productCategory, selected) => {
+  if (selected === "All") return true;
+  const a = String(productCategory || "").toLowerCase();
+  const b = selected.toLowerCase();
+  if (b.includes("cctv")) return a.includes("cctv") || a.includes("security") || a.includes("camera");
+  if (b === "networking") return a.includes("network") || a.includes("wi-fi") || a.includes("wifi");
+  if (b === "fibre") return a.includes("fibre") || a.includes("fiber");
+  if (b === "starlink") return a.includes("starlink") || a.includes("satellite");
+  if (b.includes("tools")) return a.includes("tool") || a.includes("test");
+  if (b.includes("power")) return a.includes("power") || a.includes("solar");
+  return a.includes(b);
+};
+
+function MarketHeader({ basketCount, onBasket }) {
+  const [term, setTerm] = useState("");
+  const submit = (event) => {
+    event.preventDefault();
+    window.dispatchEvent(new CustomEvent("terci-store-search", { detail: term }));
+  };
+  return <>
+    <div className="market-topline">Copperbelt delivery · Mobile money accepted · <b>Real support from Terci</b></div>
+    <header className="market-header">
+      <a className="market-logo" href="/" aria-label="Terci Market home"><img src="/images/terci-mark.png" alt=""/><span>TERCI<small>MARKET</small></span></a>
+      <form className="market-search" onSubmit={submit}><input value={term} onChange={(event) => setTerm(event.target.value)} aria-label="Search products" placeholder="Search products, brands or categories…"/><button type="submit">Search</button></form>
+      <div className="market-actions"><a href="/about">About Terci</a><button className="market-cart-button" onClick={onBasket}>🛒 Basket <b>{basketCount}</b></button></div>
+    </header>
+    <nav className="market-nav"><a href="#catalogue">Shop all</a><a href="#catalogue" onClick={() => window.dispatchEvent(new CustomEvent("terci-store-category",{detail:"CCTV & Security"}))}>CCTV &amp; Security</a><a href="#catalogue" onClick={() => window.dispatchEvent(new CustomEvent("terci-store-category",{detail:"Networking"}))}>Networking</a><a href="#catalogue" onClick={() => window.dispatchEvent(new CustomEvent("terci-store-category",{detail:"Fibre"}))}>Fibre</a><a href="#catalogue" onClick={() => window.dispatchEvent(new CustomEvent("terci-store-category",{detail:"Starlink"}))}>Starlink</a><a href="#catalogue" onClick={() => window.dispatchEvent(new CustomEvent("terci-store-category",{detail:"Tools & Test Equipment"}))}>Tools &amp; Test</a><a href="/about#services">Installation services</a></nav>
+  </>;
+}
+
+function MarketCard({ product, onDetails, onAdd }) {
+  const picture = product.imageUrl || (Array.isArray(product.imageUrls) && product.imageUrls[0]) || categoryFallback(product.category);
+  const price = Number(product.price) > 0 ? (product.estimated ? "From " : "") + money(product.price) : "Request price";
+  return <article className="market-card">
+    <button className="market-product-open" onClick={() => onDetails(product)} aria-label={"View " + product.name + " details"}>
+      <div className="market-photo"><img src={picture} alt={product.name} loading="lazy"/>{(product.promo || product.isFeatured) && <span className="market-badge">{product.promo || "FEATURED"}</span>}<span className="market-stock">{product.stockStatus || "Ask for availability"}</span></div>
+      <div className="market-product-copy"><small>{product.category || "TERCI SUPPLY"}</small><h3>{product.name}</h3><p>{product.description || "Contact Terci for product specifications and availability."}</p>{product.estimated && <em>Sample price · confirm before order</em>}<b>{price}</b></div>
+    </button>
+    <button className="market-add" onClick={() => onAdd(product)}>Add to basket <span>＋</span></button>
+  </article>;
+}
+
+function Storefront() {
+  const { loading, products } = usePublicProducts();
+  const [query, setQuery] = useState(new URLSearchParams(window.location.search).get("q") || "");
+  const [category, setCategory] = useState("All");
+  const [basket, setBasket] = useState(() => { try { return JSON.parse(localStorage.getItem("terci-market-basket") || "[]"); } catch (_e) { return []; } });
+  const [selected, setSelected] = useState(null);
+  const [basketOpen, setBasketOpen] = useState(false);
+  const [notice, setNotice] = useState("");
+  useEffect(() => { localStorage.setItem("terci-market-basket", JSON.stringify(basket)); }, [basket]);
+  useEffect(() => {
+    const onSearch = (event) => { setQuery(event.detail || ""); setCategory("All"); document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" }); };
+    const onCategory = (event) => { setCategory(event.detail || "All"); document.getElementById("catalogue")?.scrollIntoView({ behavior: "smooth" }); };
+    window.addEventListener("terci-store-search", onSearch);
+    window.addEventListener("terci-store-category", onCategory);
+    return () => { window.removeEventListener("terci-store-search", onSearch); window.removeEventListener("terci-store-category", onCategory); };
+  }, []);
+  useEffect(() => { if (!selected && !basketOpen) return undefined; const close = (event) => { if (event.key === "Escape") { setSelected(null); setBasketOpen(false); } }; window.addEventListener("keydown", close); return () => window.removeEventListener("keydown", close); }, [selected, basketOpen]);
+  const add = (product) => {
+    setBasket((current) => { const match = current.find((item) => item.id === product.id); return match ? current.map((item) => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item) : current.concat([{ id: product.id, name: product.name, category: product.category, price: Number(product.price) || 0, estimated: !!product.estimated, imageUrl: product.imageUrl || (Array.isArray(product.imageUrls) && product.imageUrls[0]) || categoryFallback(product.category), quantity: 1 }]); });
+    setNotice(product.name + " added to your basket");
+    window.setTimeout(() => setNotice(""), 2000);
+  };
+  const changeQuantity = (id, delta) => setBasket((current) => current.map((item) => item.id === id ? { ...item, quantity: item.quantity + delta } : item).filter((item) => item.quantity > 0));
+  const remove = (id) => setBasket((current) => current.filter((item) => item.id !== id));
+  const count = basket.reduce((sum, item) => sum + item.quantity, 0);
+  const subtotal = basket.reduce((sum, item) => sum + (item.price || 0) * item.quantity, 0);
+  const term = query.trim().toLowerCase();
+  const visible = products.filter((product) => categoryMatches(product.category, category) && (!term || [product.name, product.category, product.description].join(" ").toLowerCase().includes(term)));
+  const checkoutText = "Hello Terci, I would like to order:" + String.fromCharCode(10) + basket.map((item) => "- " + item.name + " × " + item.quantity + (item.price ? " — " + money(item.price * item.quantity) : " — please confirm price")).join(String.fromCharCode(10)) + String.fromCharCode(10) + String.fromCharCode(10) + "Subtotal of priced items: " + money(subtotal) + String.fromCharCode(10) + "Please confirm stock, delivery charge and final total.";
+  const checkoutUrl = "https://wa.me/260972888575?text=" + encodeURIComponent(checkoutText);
+  return <main className="market-site">
+    <MarketHeader basketCount={count} onBasket={() => setBasketOpen(true)}/>
+    {PREVIEW_DEMO_MODE && <div className="demo-ribbon">PREVIEW ONLY — example products and prices for layout review</div>}
+    <div className="market-shell">
+      <section className="market-hero"><div className="market-hero-copy"><p className="market-kicker">Terci Communications · Zambia</p><h1>Trusted tech.<br/><span>Ready for the job.</span></h1><p>Shop networking, fibre, CCTV, Starlink and business technology from a team that understands how it works.</p><a className="market-hero-cta" href="#catalogue">Shop popular products <b>→</b></a><small>Local support · Clear Kwacha pricing · WhatsApp ordering</small></div><div className="market-hero-image"><img src="/images/hero-fibre-installation.webp" alt="Terci fibre installation work"/><div className="market-hero-stamp"><b>TERCI</b><span>SUPPLY<br/>+ SUPPORT</span></div></div></section>
+      <section className="market-category-section"><div className="market-section-title"><div><h2>Shop by category</h2><p>Explore products for your next installation or upgrade.</p></div><a href="/about#services">Need installation? <b>Talk to Terci →</b></a></div><div className="market-categories">{marketCategories.map(([name,icon]) => <button key={name} className={category === name ? "selected" : ""} onClick={() => { setCategory(name); document.getElementById("catalogue")?.scrollIntoView({behavior:"smooth"}); }}><i>{icon}</i><span>{name === "All" ? "All products" : name}</span></button>)}</div></section>
+      <section className="market-catalogue" id="catalogue"><div className="market-section-title"><div><h2>Popular products</h2><p>Current catalogue and pricing from Terci.</p></div><span className="market-count">{loading ? "Loading…" : visible.length + " products"}</span></div>
+        {loading && <div className="market-empty"><b>Loading Terci’s catalogue…</b><p>Products and prices will appear as soon as the catalogue loads.</p></div>}
+        {!loading && visible.length > 0 && <div className="market-grid">{visible.map((product) => <MarketCard key={product.id} product={product} onDetails={setSelected} onAdd={add}/>)}</div>}
+        {!loading && !visible.length && <div className="market-empty"><b>{products.length ? "No matching products" : "Catalogue being updated"}</b><p>{products.length ? "Try another search or ask us to source the item." : "Our team is preparing the first product listings. Contact us and we’ll help you find what you need."}</p><a href={WA + "?text=Hello%20Terci%2C%20please%20help%20me%20find%20a%20product."} target="_blank" rel="noreferrer">Ask Terci on WhatsApp →</a></div>}
+      </section>
+      <section className="market-promise"><div><b>✓</b><span><strong>Products with support</strong><small>Advice from people who work with the equipment.</small></span></div><div><b>✓</b><span><strong>Clear prices in Kwacha</strong><small>See the listed price before you add an item.</small></span></div><div><b>✓</b><span><strong>Easy WhatsApp checkout</strong><small>Confirm availability and delivery with our team.</small></span></div></section>
+    </div>
+    <Footer/>
+    {selected && <div className="market-overlay" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setSelected(null)}><section className="market-detail" role="dialog" aria-modal="true" aria-label={selected.name}><button className="market-close" onClick={() => setSelected(null)} aria-label="Close details">×</button><img src={selected.imageUrl || (Array.isArray(selected.imageUrls) && selected.imageUrls[0]) || categoryFallback(selected.category)} alt={selected.name}/><div><small>{selected.category || "TERCI SUPPLY"}</small><h2>{selected.name}</h2><p>{selected.description || "Contact Terci for product specifications and availability."}</p><span className="market-stock">{selected.stockStatus || "Ask for availability"}</span>{selected.estimated && <em>Sample price · confirm before order</em>}<strong>{Number(selected.price) > 0 ? (selected.estimated ? "From " : "") + money(selected.price) : "Request price"}</strong><button className="market-add" onClick={() => { add(selected); setSelected(null); }}>Add to basket <span>＋</span></button></div></section></div>}
+    {basketOpen && <div className="market-overlay basket-overlay" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && setBasketOpen(false)}><aside className="market-basket" role="dialog" aria-modal="true" aria-label="Your basket"><header><div><small>TERCI MARKET</small><h2>Your basket <span>({count})</span></h2></div><button className="market-close" onClick={() => setBasketOpen(false)} aria-label="Close basket">×</button></header>
+      {!basket.length ? <div className="market-empty"><b>Your basket is empty.</b><p>Add a product to start an order.</p><button onClick={() => setBasketOpen(false)}>Continue shopping</button></div> : <><div className="market-basket-items">{basket.map((item) => <article key={item.id}><img src={item.imageUrl} alt=""/><div className="market-basket-item"><b>{item.name}</b><small>{item.price ? (item.estimated ? "From " : "") + money(item.price) : "Price to confirm"}</small><div className="market-quantity"><button onClick={() => changeQuantity(item.id,-1)} aria-label={"Decrease " + item.name}>−</button><span>{item.quantity}</span><button onClick={() => changeQuantity(item.id,1)} aria-label={"Increase " + item.name}>＋</button><button className="market-remove" onClick={() => remove(item.id)}>Remove</button></div></div><strong>{item.price ? money(item.price * item.quantity) : "Confirm"}</strong></article>)}</div><div className="market-basket-total"><span>Priced items subtotal</span><b>{money(subtotal)}</b><small>Delivery and unpriced items will be confirmed on WhatsApp.</small><a className="market-checkout" href={checkoutUrl} target="_blank" rel="noreferrer">Continue to WhatsApp <span>↗</span></a></div></>}
+    </aside></div>}
+    {notice && <div className="market-toast" role="status">{notice}</div>}
+  </main>;
 }
 
 const emptyProduct = {
@@ -364,7 +471,7 @@ function ProductForm({ product = emptyProduct, onSave, onError, busy, compact = 
     <label>Price in ZMW<input name="price" value={values.price} onChange={change} type="number" min="0" step="0.01" placeholder="0 means Request price"/></label>
     <label>Stock status<select name="stockStatus" value={values.stockStatus} onChange={change} required><option>In stock</option><option>Available to order</option><option>Limited stock</option><option>Out of stock</option></select></label>
     <label>Display order<input name="sortOrder" value={values.sortOrder} onChange={change} type="number" step="1"/></label>
-    <div className="product-picture-fields wide"><b>Product pictures</b>{product.id && savedImages.length > 0 && <div className="saved-picture-list">{savedImages.map((item,index) => <div className="saved-picture-item" key={(item.id || item.url || item.name) + index}>{item.url && <img src={item.url} alt={`${product.name} picture ${index + 1}`}/>}<span>{index === 0 ? "Current main picture" : `Current picture ${index + 1}`}</span><button type="button" className="remove-picture" onClick={() => setSavedImages((current) => current.filter((_,itemIndex) => itemIndex !== index))}>Remove</button></div>)}</div><small>Upload up to 5 pictures. Picture 1 is the main catalogue image. Photos are automatically resized and compressed to WebP before upload.</small><div className="picture-slot-grid">{[0,1,2,3,4].map((index) => <label className="file-input picture-slot" key={index}><span>{index === 0 ? "Picture 1 · Main" : `Picture ${index + 1}`}</span><input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => { const file = event.target.files?.[0] || null; setImages((current) => { const next = [...current]; if (file) next[index] = file; else next.splice(index,1); return next.filter(Boolean).slice(0,5); }); }}/><small>{images[index]?.name || "Choose JPG, PNG, WebP or GIF"}</small>{images[index] && <button type="button" className="remove-picture" onClick={(event) => { event.preventDefault(); event.stopPropagation(); setImages((current) => { const next = [...current]; next[index] = undefined; return next; }); }}>Remove</button>}</label>)}</div>{images.length > 0 && <span className="admin-image-count">{images.length} picture{images.length === 1 ? "" : "s"} selected</span>}</div>
+    <div className="product-picture-fields wide"><b>Product pictures</b>{product.id && savedImages.length > 0 && <div className="saved-picture-list">{savedImages.map((item,index) => <div className="saved-picture-item" key={(item.id || item.url || item.name) + index}>{item.url && <img src={item.url} alt={`${product.name} picture ${index + 1}`}/>}<span>{index === 0 ? "Current main picture" : `Current picture ${index + 1}`}</span><button type="button" className="remove-picture" onClick={() => setSavedImages((current) => current.filter((_,itemIndex) => itemIndex !== index))}>Remove</button></div>)}</div>}<small>Upload up to 5 pictures. Picture 1 is the main catalogue image. Photos are automatically resized and compressed to WebP before upload.</small><div className="picture-slot-grid">{[0,1,2,3,4].map((index) => <label className="file-input picture-slot" key={index}><span>{index === 0 ? "Picture 1 · Main" : `Picture ${index + 1}`}</span><input type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={(event) => { const file = event.target.files?.[0] || null; setImages((current) => { const next = [...current]; if (file) next[index] = file; else next.splice(index,1); return next.filter(Boolean).slice(0,5); }); }}/><small>{images[index]?.name || "Choose JPG, PNG, WebP or GIF"}</small>{images[index] && <button type="button" className="remove-picture" onClick={(event) => { event.preventDefault(); event.stopPropagation(); setImages((current) => { const next = [...current]; next[index] = undefined; return next; }); }}>Remove</button>}</label>)}</div>{images.length > 0 && <span className="admin-image-count">{images.length} picture{images.length === 1 ? "" : "s"} selected</span>}</div>
     <label className="feature-check"><input name="isActive" type="checkbox" checked={values.isActive} onChange={change}/><span><b>Visible in catalogue</b><small>Turn this off to hide the product.</small></span></label>
     <label className="feature-check"><input name="isFeatured" type="checkbox" checked={values.isFeatured} onChange={change}/><span><b>Feature on homepage</b><small>Show this item in the home product section.</small></span></label>
     <button disabled={busy || uploading} type="submit"><span>{busy || uploading ? "Saving…" : product.id ? "Save changes" : "Add product"}</span><span>→</span></button>
@@ -428,8 +535,9 @@ function AdminDashboard() {
 export default function App() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
   const path = window.location.pathname.replace(/\/+$/, "") || "/";
-  if (path === "/shop") return <Shop/>;
+  if (path === "/shop") return <Storefront/>;
+  if (path === "/about") return <Home/>;
   if (path === "/fiber" || path === "/fibre") return <Fiber/>;
   if (path === "/admin") return <AdminDashboard/>;
-  return <Home/>;
+  return <Storefront/>;
 }
